@@ -8,7 +8,7 @@
 void f1()
 {
 	fprintf(stderr, "F1 Global: %d\n", global);
-	fprintf(stderr, "F1 Helper Global: %d\n", global23);
+	//fprintf(stderr, "F1 Helper Global: %d\n", global23);
 	f1a();
 }
 

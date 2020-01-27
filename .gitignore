@@ -1,0 +1,3 @@
+# Ignore all object file produced by a C/C++ compiler
+*.o
+
