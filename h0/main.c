@@ -6,10 +6,7 @@
 #include <string.h>     //str function
 #include <unistd.h>     //standard symbolic constants and types
 #include "functionOne.h"
-#include "functionTwo.h"
-#include "functionThree.h"
-int global = 11;
-int global23 = 23;
+#include "functionTwoThree.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +14,7 @@ int main(int argc, char *argv[])
 	f2();
 	f3();
 	f1();
+	f3();
 	return 0;
 }
 

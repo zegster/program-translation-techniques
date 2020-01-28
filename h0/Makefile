@@ -1,7 +1,7 @@
 CC         = gcc
 CFLAGS     = -Wall -g
 
-SRC        = functionOne.h functionTwo.h functionThree.h
+SRC        = global.h functionOne.h functionTwoThree.h
 MASTER_SRC = main.c
 
 OBJ        = $(SRC:.h=.o)

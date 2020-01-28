@@ -4,11 +4,12 @@
 #include <stdint.h>     //for uint32_t
 #include <string.h>     //str function
 #include <unistd.h>     //standard symbolic constants and types
+#include "helper.h"
 #include "functionOne.h"
 void f1()
 {
 	fprintf(stderr, "F1 Global: %d\n", global);
-	//fprintf(stderr, "F1 Helper Global: %d\n", global23);
+	global += 1;
 	f1a();
 }
 
