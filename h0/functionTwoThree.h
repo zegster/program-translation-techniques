@@ -1,0 +1,6 @@
+#ifndef FUNCTION_TWO_THREE_HEADER
+	#define FUNCTION_TWO_THREE_HEADER
+	void f2();
+	void f3();
+#endif	//FUNCTION_TWO_THREE_HEADER
+
