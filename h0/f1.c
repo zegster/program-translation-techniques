@@ -5,17 +5,21 @@
 #include <string.h>     //str function
 #include <unistd.h>     //standard symbolic constants and types
 #include "helper.h"
-#include "functionTwoThree.h"
+#include "f1.h"
+#define M1a
+static void f1a();
+int global;
 
-static int global23 = 0;
-void f2()
+
+void f1()
 {
-	fprintf(stderr, "F2 Helper Global: %d\n", global23);
-	global23 += 2;	
+	fprintf(stderr, "F1 Global: %d\n", global);
+	global += 1;
+	f1a();
 }
-void f3()
+
+static void f1a()
 {
-	fprintf(stderr, "F3 Helper Global: %d\n", global23);
-	global23 += 3;	
+	fprintf(stderr, "Merp...\n");
 }
 
