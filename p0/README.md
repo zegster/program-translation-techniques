@@ -7,7 +7,7 @@ Write a program to build a tree and print it using different traversals. The pro
 ```
 	user@host~/p0 $: ./P0 [file]
 ```
-1. where file is an optional argument.
+1. Where file is an optional argument.
 2. If the file argument is not given, the program reads data from the keyboard as a device (15%).
 3. If the argument is given, the program reads data file file.sp2020. (note that file is any name and the extension is implicit).
 4. Programs improperly implementing file name or executable will not be graded.
@@ -144,7 +144,7 @@ static void printPreorder(nodeType *rootP,int level)
 #### Testing - This section is non-exhaustive testing of P0
 ##### Create test files:
 - P0_test1.sp2020 containing empty file
-- P0_test2.2020 containing one string: adam
+- P0_test2.sp2020 containing one string: adam
 - P0_test3.sp2020 containing some strings with the first two letters the same (some repeats) but doing it over different lines, e.g., use the example from above
 
 ##### For each test file, draw by hand the tree that should be generated. For example:

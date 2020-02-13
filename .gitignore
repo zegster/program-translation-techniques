@@ -1,3 +1,5 @@
 # Ignore all object file produced by a C/C++ compiler
 *.o
+*.dat
+*.sp2020
 
