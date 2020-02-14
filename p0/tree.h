@@ -11,12 +11,10 @@
 using namespace std;
 
 
-NodeT *buildTree(istream &in);
-NodeT *create_node(string token);
-NodeT *insert(NodeT *node, string token);
-void getLevel(NodeT *root);
-int findLevel(NodeT *root, int token_length);
-int assignLevel(NodeT*, int token_length, int level);
+NodeT *buildTree(string file_name);
+NodeT *createNode(int level, string label, string word);
+NodeT *insert(NodeT *root, int level, string label, string word);
+int getLevel(NodeT *root);
 
 #endif
 

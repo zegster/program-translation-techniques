@@ -13,9 +13,9 @@ using namespace std;
 
 typedef struct node_t
 {
-	int level;                   //The level of this node
-	int token_length;            //The length of tokens, or strings, of this node
-	set<string> tokens;          //The set of tokens of this node
+	int level;                    //The level of this node
+	string label;                 //The label of this node (for comparison and print)
+	set<string> words;            //The set of words of this node
 	struct node_t *left, *right;  //The left and right subtrees of this node
 }NodeT;
 
