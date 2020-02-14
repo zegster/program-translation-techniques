@@ -30,9 +30,10 @@ int main(int argc, char *argv[])
 	/* Binary Search Tree Variable */
 	NodeT *root = NULL;
 
+	/* Processing program given arguments */
 	switch(argc)
 	{
-		case 1:
+		case 1:/* Reading from the keyboard */
 		{
 			cout << "[NOTICE] Reading from the keyboard." << endl;
 			string user_input;
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
 			temp_file.open(file_name.c_str());
 
 			//Writing user input into a temporary file and close the file when done
-			cout << "Please enter alphanumeric characters (enter an empty line to finish)";
+			cout << "Please enter alphanumeric characters (enter an empty line to finish).";
 			do
 			{
 				cout << endl << ">>: ";
@@ -55,11 +56,11 @@ int main(int argc, char *argv[])
 			//Close file when done
 			cout << "[NOTICE] Finish inputting! Proceeding..." << endl << endl;
 			temp_file.close();
-			output_file_name = "user_input";
+			output_file_name = "output";
 			break;
 		}
 
-		case 2:
+		case 2:/* Reading from file */
 		{
 			cout << "[NOTICE] Reading from file." << endl << endl;
 
@@ -70,7 +71,7 @@ int main(int argc, char *argv[])
 			break;
 		}
 		
-		default:
+		default:/* Invalid Usage */
 		{
 			cout << "[ERROR] Too many arguments!" << endl;
 			cout << "Usage: ./main [file]" << endl;
@@ -78,16 +79,28 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	/* Building BST */
 	//Check if root is NULL after invoking buildTree()
-	//Terminate the program when there's empty input from file or keyboard
+	//Terminate the program when there's empty input from file or keyboard or something went wrong
 	root = buildTree(file_name);
 	if(root == NULL)
 	{
-		cout << "[ERROR] Empty input!" << endl;
+		cout << "[ERROR] Something went wrong... Aborting program!" << endl;
 		return 1;
 	}
 
-	traverseInorder(root);
+	/* Invoking BST traversal */
+	cout << "[NOTICE] Preorder Traversal of a Binary Search Tree." << endl;
+	traversePreorder(output_file_name, root);
+	cout << endl;
+
+	cout << "[NOTICE] Inorder Traversal of a Binary Search Tree." << endl;
+	traverseInorder(output_file_name, root);
+	cout << endl;
+
+	cout << "[NOTICE] Postorder Traversal of a Binary Search Tree." << endl;
+	traversePostorder(output_file_name, root);
+	cout << endl;
 
 	return 0;
 }

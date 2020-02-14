@@ -13,17 +13,12 @@
 using namespace std;
 
 
-static const int BUFFER_SIZE = 256;
-static int tree_size = 0;
-static int max_token_length = 0;
-
-
 NodeT *buildTree(string file_name)
 {
 	NodeT *root = NULL;
 	ifstream file(file_name.c_str());
 
-	//Check if the file is open and assoicated with the stream object
+	//Check if the file is open and associated with the stream object
 	if(file.is_open())
 	{
 		//Read all line in the file
@@ -31,39 +26,34 @@ NodeT *buildTree(string file_name)
 		while(getline(file, input))
 		{
 			//Tokenize input into an array
-			char *token = strtok(&input[0], " ");
+			char *token = strtok(&input[0], " \t");
 
 			//Loop through every word in the array
 			while(token != NULL)
 			{
-				//Loop through every character in the word
-				string word = token;
-				for(unsigned int i = 0; i < word.size(); i++)
-				{
-					//Check if each character is alphanumeric 
-					if(!isalnum(word.at(i)))
-					{
-						cout << "[ERROR] Invalid character!" << endl;
-						return NULL;
-					}
-				}
-
-				//Set the current token to null
-				token = strtok(NULL, " ");
-
 				//Label the node (for comparison)
+				string word = token;
 				string label = word.substr(0, 2);
 
 				//Add word to tree
 				root = insert(root, 0, label, word);
+
+				//Set the current token to null
+				token = strtok(NULL, " \t");
 			}
 		}
 	}
 	else
 	{
+		cout << "[ERROR] Can't open file!" << endl;
 		return NULL;
 	}
 
+	//Output a error message if root still null
+	if(root == NULL)
+	{
+		cout << "[ERROR] Empty Input!" << endl;
+	}
 	file.close();
 	return root;
 }

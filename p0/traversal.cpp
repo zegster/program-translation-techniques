@@ -10,29 +10,60 @@
 #include "traversal.h"
 
 
-void printToken(int level, set<string> token)
+void printToken(string output_file_name, int level, set<string> token)
 {
-	set<string>::iterator i;
-	printf("%*s", level * 4, "");
-	cout << (*token.begin()).substr(0, 2) << ": ";
-	for(i = token.begin(); i != token.end(); i++)
+	//Print out spacing
+	for(int i = 0; i < level; i++)
 	{
-		cout << *i << " ";
+		cout << "----";
+	}
+
+	//Print out the token of the node
+	set<string>::iterator iter;
+	cout << "[" << (*token.begin()).substr(0, 2) << "]: ";
+	for(iter = token.begin(); iter != token.end(); iter++)
+	{
+		cout << *iter << " ";
 	}
 	cout << endl;
 }
 
 
-void traverseInorder(NodeT *root)
+void traversePreorder(string output_file_name, NodeT *root)
 {
 	if(root == NULL)
 	{
 		return;
 	}
 
-	traverseInorder(root->left);
-	printToken(root->level, root->words);
-	traverseInorder(root->right);
+	printToken(output_file_name, root->level, root->words);
+	traversePreorder(output_file_name, root->left);
+	traversePreorder(output_file_name, root->right);
 }
 
+
+void traverseInorder(string output_file_name, NodeT *root)
+{
+	if(root == NULL)
+	{
+		return;
+	}
+
+	traverseInorder(output_file_name, root->left);
+	printToken(output_file_name, root->level, root->words);
+	traverseInorder(output_file_name, root->right);
+}
+
+
+void traversePostorder(string output_file_name, NodeT *root)
+{
+	if(root == NULL)
+	{
+		return;
+	}
+
+	traversePostorder(output_file_name, root->left);
+	traversePostorder(output_file_name, root->right);
+	printToken(output_file_name, root->level, root->words);
+}
 

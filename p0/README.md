@@ -26,7 +26,7 @@ P0 somefile      //(read from somefile.sp2020)
 3. If the input file is not readable for whatever reason, or command line arguments are not correct, the program must abort with an appropriate message
 4. The program will read the data left to right and put them into a tree, which is a binary search tree (BST) with respect to the first two letters of the string , that is all strings that start with the same first two letters fall into the same node in the BST.
 5. Tree is never balanced nor restructured other than growing new nodes.
-6. A node should contain all data that falls into the node except that literally the same strings will show up only once ( the node contains the set of data falling into the node).
+6. A node should contain all data that falls into the node except that literally the same strings will show up only once (the node contains the set of data falling into the node).
 7. The program will subsequently output 3 files corresponding to 3 traversals, named file.preorder, file.inorder and file.postorder. Note that file is the base name of the input file if given, and it is output if not given.
 
 ##
