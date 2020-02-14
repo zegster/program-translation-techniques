@@ -8,10 +8,11 @@
 	traversals, command line arguments, and file IO. Write a program to build a tree and print it 
 	using different traversals. 
 ==================================================================================================== */
-#include <iostream>      //For cout and cin; input and output
+#include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <cstring>       //Defines several functions to manipulate C strings and arrays.
-#include <fstream>       //Input/output stream class to operate on files.
+#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
+#include <fstream>       //Input and output stream class to operate on files.
 #include "node.h"
 #include "tree.h"
 #include "traversal.h"
@@ -90,18 +91,29 @@ int main(int argc, char *argv[])
 	}
 
 	/* Invoking BST traversal */
+	ofstream output_file;
+	
+	output_file.open((output_file_name + ".preorder").c_str());
 	cout << "[NOTICE] Preorder Traversal of a Binary Search Tree." << endl;
-	traversePreorder(output_file_name, root);
+	output_file << "[NOTICE] Preorder Traversal of a Binary Search Tree." << endl;
+	traversePreorder(output_file, root);
 	cout << endl;
+	output_file.close();
 
+	output_file.open((output_file_name + ".inorder").c_str());
 	cout << "[NOTICE] Inorder Traversal of a Binary Search Tree." << endl;
-	traverseInorder(output_file_name, root);
+	output_file << "[NOTICE] Inorder Traversal of a Binary Search Tree." << endl;
+	traverseInorder(output_file, root);
 	cout << endl;
+	output_file.close();
 
+	output_file.open((output_file_name + ".postorder").c_str());
 	cout << "[NOTICE] Postorder Traversal of a Binary Search Tree." << endl;
-	traversePostorder(output_file_name, root);
+	output_file << "[NOTICE] Postorder Traversal of a Binary Search Tree." << endl;
+	traversePostorder(output_file, root);
 	cout << endl;
-
+	output_file.close();
+	
 	return 0;
 }
 

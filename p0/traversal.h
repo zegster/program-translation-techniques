@@ -8,8 +8,9 @@
 #define TRAVERSAL_H
 #include "node.h"
 
-void printToken(string output_file_name, int level, set<string> token);
-void traverseInorder(string output_file_name, NodeT *root);
-void traversePreorder(string output_file_name, NodeT *root);
-void traversePostorder(string output_file_name, NodeT *root);
+void printToken(ofstream &file, int level, set<string> token);
+void traverseInorder(ofstream &file, NodeT *root);
+void traversePreorder(ofstream &file, NodeT *root);
+void traversePostorder(ofstream &file, NodeT *root);
 #endif
+
