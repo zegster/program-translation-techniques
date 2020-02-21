@@ -160,6 +160,15 @@ static void printPreorder(nodeType *rootP,int level)
 	- Outputs P0_test3.inorder P0_test3.preorder P0_test3.postorder containing as above
 	
 
-
-
+--------------------------------------------------------------------------------
+##### HOW TO RUN:
+1. In your command promt, type: make
+2. This will generate .o file and executable file
+3. To use the program, type: ./main (or the name of your a.out)
+4. You build a tree and print it using different traversals.
+5. Examples of invocations:
+	- ./main
+	- ./main < P0_test3.sp2020
+	- ./main P0_test5
+--------------------------------------------------------------------------------
 

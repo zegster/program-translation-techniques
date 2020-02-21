@@ -68,14 +68,24 @@ int main(int argc, char *argv[])
 			//Construct output file name
 			file_name = argv[1];
 			size_t extension_index = file_name.find(".");
-			output_file_name = (extension_index == string::npos) ? file_name : file_name.substr(0, extension_index);
+
+			//Check if there is extension. If not, append the implicit extension. As well as grabbing the file name for the output file
+			if(extension_index == string::npos)
+			{
+				output_file_name = file_name;
+				file_name.append(".sp2020");
+			}
+			else
+			{
+				output_file_name = file_name.substr(0, extension_index);
+			}
 			break;
 		}
 		
 		default:/* Invalid Usage */
 		{
 			cout << "[ERROR] Too many arguments!" << endl;
-			cout << "Usage: ./main [file]" << endl;
+			cout << "Usage: " << argv[0] << " [file]" << endl;
 			return 1;
 		}
 	}
