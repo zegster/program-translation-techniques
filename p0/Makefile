@@ -5,7 +5,7 @@ MASTER_SRC = main.cpp
 SRC        = tree.h traversal.h
 AUX        = node.h
 
-MASTER_OBJ = $(MASTER_SRC:.c=.o)
+MASTER_OBJ = $(MASTER_SRC:.cpp=.o)
 OBJ        = $(SRC:.h=.o)
 
 MASTER     = main
