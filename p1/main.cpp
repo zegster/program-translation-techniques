@@ -13,7 +13,7 @@
 #include <cstring>       //Defines several functions to manipulate C strings and arrays.
 #include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
 #include <fstream>       //Input and output stream class to operate on files.
-#include "scanner.h"
+#include "testScanner.h"
 using namespace std;
 
 

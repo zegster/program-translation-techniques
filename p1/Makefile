@@ -2,7 +2,7 @@ CC         = g++
 CFLAGS     = -Wall -g
 
 MASTER_SRC = main.cpp
-SRC        = scanner.h token.h
+SRC        = token.h scanner.h testScanner.h
 
 MASTER_OBJ = $(MASTER_SRC:.cpp=.o)
 OBJ        = $(SRC:.h=.o)

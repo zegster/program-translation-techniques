@@ -52,7 +52,7 @@ extern map<string, string> operator_map;
 extern map<string, string> keyword_map;
 
 
-
+/* Token Function Prototype */
 void initOperatorMap();
 void initKeywordMap();
 void tokenToString(Token tk);

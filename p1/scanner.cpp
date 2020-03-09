@@ -9,7 +9,6 @@
 int getCategory(char ch)
 {
 	//Refer to FSA_TABLE in scanner.h
-	//Check if alphabetic character
 	if(isalpha(ch)) {
 		return 0;  //Letter is in column 0
 	}
@@ -23,10 +22,21 @@ int getCategory(char ch)
 		return 4;  //Operator is in column 4
 	}
 	else {
-		return 5; //No match for accepted categories, will error out
+		return 5;  //No match for accepted categories, will error out
 	}
 }
 
+
+void getError(int current_line, int state, char ch)
+{
+	cout << "ERROR on line #" << current_line << " [" << ch << "]: ";
+	if(state == ERROR_INT) {
+		cout << "all integer token must contain only digits." << endl;
+	}
+	else if(state == ERROR_UNK) {
+		cout << "unknown token is not allow." << endl;
+	}
+}
 
 int scanner(int current_line, string &input, Token &tk)
 {
@@ -34,12 +44,12 @@ int scanner(int current_line, string &input, Token &tk)
 	tk.line_number = current_line;
 
 	//Init variable for tracking
-	int current_state = 0;
-	int next_fsa_tbl_row = 0;
-	int next_fsa_tbl_col = 0;
-	char next_char;
+	int current_state = 0;           //Keep track of the current FSA state
+	int next_state = 0;              //Refer to the row of FSA Table
+	int next_category = 0;           //Refer to the column of FSA Table
+	char next_char;                  //Keep track of the current token of the input
+	unsigned int current_index = 0;  //Keep track of the current character of the token
 
-	unsigned int current_index = 0;
 	while(current_index <= input.length()) {
 		if(current_index < input.length()) {
 			next_char = input.at(current_index);
@@ -48,8 +58,23 @@ int scanner(int current_line, string &input, Token &tk)
 			next_char = ' ';
 		}
 
-		next_fsa_tbl_col = getCategory(next_char);
-		next_fsa_tbl_row = FSA_TABLE[current_state][next_fsa_tbl_col];
+		//Look at FSA Table and obtain the next state (row)
+		next_category = getCategory(next_char);
+		next_state = FSA_TABLE[current_state][next_category];
+
+		//Check to see if this were an error state
+		if(next_state < 0) {
+			getError(current_line, next_state, next_char);
+			return -1;
+		}
+		else if(next_state > STATE_F) {
+			switch(next_state)
+			{
+				case STATE_ID:
+					cout << "merp" << endl;
+					break;
+			}
+		}
 	}
 
 	return -1;
