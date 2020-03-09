@@ -74,6 +74,7 @@ int isOperator(char ch)
 
 int isKeyword(Token &tk)
 {
+	//Return keyword key when input token is a keyword
 	for(unsigned int i = 0; i < KEYWORD_SIZE; i++)
 	{
 		if(tk.value.compare(keywords[i]) == 0)
@@ -83,5 +84,6 @@ int isKeyword(Token &tk)
 		}
 	}
 
+	//Return -1 when input token is not a keyword
 	return -1;
 }

@@ -50,7 +50,7 @@ int scanner(int current_line, string &input, Token &tk)
 	int current_state = 0;           //Keep track of the current FSA state
 	int next_state = 0;              //Refer to the row of FSA Table
 	int next_category = 0;           //Refer to the column of FSA Table
-	string token_value;              //The value of the token
+	string read_value;              //The current reading value of the token
 	char next_char;                  //Keep track of the current token of the input
 
 	while(current_scanner_pointer <= input.length()) {
@@ -65,39 +65,49 @@ int scanner(int current_line, string &input, Token &tk)
 		next_category = getCategory(next_char);
 		next_state = FSA_TABLE[current_state][next_category];
 		
-		//Check to see if this were an error state
+		//Check to see if this were an error state. Return -1 if it is.
 		if(next_state < 0) {
 			getError(current_line, next_state, next_char);
 			return -1;
 		}
+		//Check to see if this were the final state. Return 0 if it is.
 		else if(next_state > STATE_F) {
+			//Set the token	holder with the current token read value	
+			tk.value = read_value;
+
+			//Look for a specific final state and assign the token holder with appropriate id and value
 			switch(next_state)
 			{
 				case STATE_ID:
 					if(isKeyword(tk) != -1) {
 						tk.id = keywordTk;
+						tk.value.append(" " + read_value);
 					}
 					else {
 						tk.id = idTk;
-						tk.value.assign("idTk " + token_value);
+						tk.value.assign("idTk " + read_value);
 					}
 					break;
 
 				case STATE_INT:
-					cout << "derp" << endl;
+					tk.id = intTk;
+					tk.value.assign("intTk " + read_value);
+					break;
 			}
-
 			return 0;
 		}
 
+		//Update state and scanner pointer
 		current_state = next_state;
 		current_scanner_pointer++;
 
+		//If not white space flager, update reading value of the token
 		if(!isspace(next_char)) {
-			token_value.push_back(next_char);
+			read_value.push_back(next_char);
 		}
 	}
 
+	//When scanner pointer is looking at the end of the input, end scanner.
 	return -1;
 }
 
