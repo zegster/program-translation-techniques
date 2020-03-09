@@ -6,8 +6,9 @@
 ==================================================================================================== */
 #ifndef TOKEN_H
 #define TOKEN_H
-#include <string>
-#include <map>
+#include <iostream>      //For cout and cin; input and output.
+#include <string>        //Introduces string types, character traits and a set of converting functions.
+#include <map>           //Dictionary like data structure
 using namespace std;
 
 /* Token Categories */
@@ -38,12 +39,12 @@ const char operators[OPERATOR_SIZE] = {
 
 
 /* Token Structure */
-typedef struct Token
+typedef struct token
 {
 	token_id id;
 	int line_number;
 	string value;
-} token;
+} Token;
 
 /* Operator Map & Keyword Map */
 /* Allow scanner to access from it */
@@ -54,9 +55,9 @@ extern map<string, string> keyword_map;
 
 void initOperatorMap();
 void initKeywordMap();
-void tokenToString(token tk);
+void tokenToString(Token tk);
 int isOperator(char ch);
-int isKeyword(token &tk);
+int isKeyword(Token &tk);
 
 #endif
 

@@ -14,7 +14,6 @@
 #include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
 #include <fstream>       //Input and output stream class to operate on files.
 #include "scanner.h"
-
 using namespace std;
 
 

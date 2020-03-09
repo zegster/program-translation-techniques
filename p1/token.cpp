@@ -4,11 +4,7 @@
 # File Name: token.cpp
 # Date: 3/8/2020
 ==================================================================================================== */
-#include <iostream>      //For cout and cin; input and output.
-#include <string>        //Introduces string types, character traits and a set of converting functions.
-#include <map>           //Dictionary like data structure
 #include "token.h"
-using namespace std;
 
 /* Extern Variable from token.h */
 map<string, string> operator_map;
@@ -56,9 +52,9 @@ void initKeywordMap()
 	keyword_map.insert(make_pair("data", "dataTk"));
 }
 
-void tokenToString(token tk)
+void tokenToString(Token tk)
 {
-
+	cout << "Line #: " << tk.line_number << " | " << token_names[tk.id] << " | " << tk.value << endl; 
 }
 
 
@@ -76,12 +72,13 @@ int isOperator(char ch)
 }
 
 
-int isKeyword(token &tk)
+int isKeyword(Token &tk)
 {
 	for(unsigned int i = 0; i < KEYWORD_SIZE; i++)
 	{
 		if(tk.value.compare(keywords[i]) == 0)
 		{
+			tk.value = keyword_map[tk.value];
 			return i;
 		}
 	}
