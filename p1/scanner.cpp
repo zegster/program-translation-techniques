@@ -38,6 +38,9 @@ void getError(int current_line, int state, char ch)
 	}
 }
 
+
+
+unsigned int current_scanner_pointer = 0;
 int scanner(int current_line, string &input, Token &tk)
 {
 	//Set current line number for the current token
@@ -47,12 +50,12 @@ int scanner(int current_line, string &input, Token &tk)
 	int current_state = 0;           //Keep track of the current FSA state
 	int next_state = 0;              //Refer to the row of FSA Table
 	int next_category = 0;           //Refer to the column of FSA Table
+	string token_value;              //The value of the token
 	char next_char;                  //Keep track of the current token of the input
-	unsigned int current_index = 0;  //Keep track of the current character of the token
 
-	while(current_index <= input.length()) {
-		if(current_index < input.length()) {
-			next_char = input.at(current_index);
+	while(current_scanner_pointer <= input.length()) {
+		if(current_scanner_pointer < input.length()) {
+			next_char = input.at(current_scanner_pointer);
 		} 
 		else {
 			next_char = ' ';
@@ -61,7 +64,7 @@ int scanner(int current_line, string &input, Token &tk)
 		//Look at FSA Table and obtain the next state (row)
 		next_category = getCategory(next_char);
 		next_state = FSA_TABLE[current_state][next_category];
-
+		
 		//Check to see if this were an error state
 		if(next_state < 0) {
 			getError(current_line, next_state, next_char);
@@ -71,12 +74,35 @@ int scanner(int current_line, string &input, Token &tk)
 			switch(next_state)
 			{
 				case STATE_ID:
-					cout << "merp" << endl;
+					if(isKeyword(tk) != -1) {
+						tk.id = keywordTk;
+					}
+					else {
+						tk.id = idTk;
+						tk.value.assign("idTk " + token_value);
+					}
 					break;
+
+				case STATE_INT:
+					cout << "derp" << endl;
 			}
+
+			return 0;
+		}
+
+		current_state = next_state;
+		current_scanner_pointer++;
+
+		if(!isspace(next_char)) {
+			token_value.push_back(next_char);
 		}
 	}
 
 	return -1;
 }
 
+
+void resetScannerPointer()
+{
+	current_scanner_pointer = 0;
+}

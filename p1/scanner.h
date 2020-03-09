@@ -51,10 +51,14 @@ const int FSA_TABLE[ROWS][COLUMNS] = {
 };
 
 
+/* Scanner Tracker */
+extern unsigned int current_scanner_pointer; //Keep track when the scanner is finish scanning the current input. Must init to 0.
+
 /* Scanner Function Prototype */
 int getCategory(char ch);
 void getError(int current_line, int state, char ch);
 int scanner(int current_line, string &input, Token &tk);
+void resetScannerPointer();
 
 #endif
 

@@ -54,7 +54,7 @@ void initKeywordMap()
 
 void tokenToString(Token tk)
 {
-	cout << "Line #: " << tk.line_number << " | " << token_names[tk.id] << " | " << tk.value << endl; 
+	cout << "Line #" << tk.line_number << ": " << token_names[tk.id] << " | " << tk.value << endl; 
 }
 
 

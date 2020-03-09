@@ -13,9 +13,9 @@ using namespace std;
 
 /* Token Categories */
 const int TOKEN_SIZE = 5;
-enum token_id { idTk, intTk, keywordTk, opTk, eofTk };
+enum token_id { idTk, keywordTk, intTk, opTk, eofTk };
 const string token_names[TOKEN_SIZE] = { 
-	"Identfier", "Keyword", "Operator", "Integer", "End Of File"
+	"Identfier", "Keyword", "Integer", "Operator", "End Of File"
 };
 
 /* Reserved Keyword Name */

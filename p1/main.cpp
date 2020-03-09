@@ -86,9 +86,10 @@ int main(int argc, char *argv[])
 	}
 
 	/* Invoking Scanner */
-	ofstream output_file;
-	
-	output_file.close();
+	//ofstream output_file;
+	testScanner(file_name);
+
+	//output_file.close();
 	return 0;
 }
 
