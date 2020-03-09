@@ -10,6 +10,7 @@
 #include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <cstring>       //Defines several functions to manipulate C strings and arrays.
 #include <cctype>        //Classify and transform individual characters.
+#include <cstdlib>       //Defines several general purpose functions.
 #include "token.h"
 using namespace std;
 

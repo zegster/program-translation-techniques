@@ -63,11 +63,13 @@ int isOperator(char ch)
 	//Return 1 when input character is an operator
 	for(unsigned int i = 0; i < OPERATOR_SIZE; i++)
 	{
-		if(ch == operators[i])
+		if(ch == operators[i]) {
 			return 1;
+		}
 	}
 	
 	//Return -1 when input character is not an operator
+	//Becareful how you check in conditional statement
 	return -1;
 }
 

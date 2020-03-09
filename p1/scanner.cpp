@@ -18,7 +18,7 @@ int getCategory(char ch)
 	else if(isspace(ch)) {
 		return 2;  //White Space (WS) is in column 2
 	}
-	else if(isOperator(ch)) { //isOperator() is from token.h
+	else if(isOperator(ch) != -1) { //isOperator() is from token.h
 		return 4;  //Operator is in column 4
 	}
 	else {
@@ -29,12 +29,14 @@ int getCategory(char ch)
 
 void getError(int current_line, int state, char ch)
 {
-	cout << "ERROR on line #" << current_line << " [" << ch << "]: ";
+	cout << "ERROR on line #" << current_line << " -> [" << ch << "]: ";
 	if(state == ERROR_INT) {
 		cout << "all integer token must contain only digits." << endl;
+		cout << "ERROR: " << ERROR_INT << endl;
 	}
 	else if(state == ERROR_UNK) {
 		cout << "unknown token is not allow." << endl;
+		cout << "ERROR: " << ERROR_UNK << endl;
 	}
 }
 
@@ -50,7 +52,7 @@ int scanner(int current_line, string &input, Token &tk)
 	int current_state = 0;           //Keep track of the current FSA state
 	int next_state = 0;              //Refer to the row of FSA Table
 	int next_category = 0;           //Refer to the column of FSA Table
-	string read_value;              //The current reading value of the token
+	string read_value;               //The current reading value of the token
 	char next_char;                  //Keep track of the current token of the input
 
 	while(current_scanner_pointer <= input.length()) {
@@ -64,10 +66,11 @@ int scanner(int current_line, string &input, Token &tk)
 		//Look at FSA Table and obtain the next state (row)
 		next_category = getCategory(next_char);
 		next_state = FSA_TABLE[current_state][next_category];
-		
+
 		//Check to see if this were an error state. Return -1 if it is.
 		if(next_state < 0) {
 			getError(current_line, next_state, next_char);
+			exit(EXIT_FAILURE);
 			return -1;
 		}
 		//Check to see if this were the final state. Return 0 if it is.
@@ -78,8 +81,8 @@ int scanner(int current_line, string &input, Token &tk)
 			//Look for a specific final state and assign the token holder with appropriate id and value
 			switch(next_state)
 			{
-				case STATE_ID:
-					if(isKeyword(tk) != -1) {
+				case STATE_ID: //Identfier
+					if(isKeyword(tk) != -1) { //Keyword?
 						tk.id = keywordTk;
 						tk.value.append(" " + read_value);
 					}
@@ -89,7 +92,7 @@ int scanner(int current_line, string &input, Token &tk)
 					}
 					break;
 
-				case STATE_INT:
+				case STATE_INT: //Integer
 					tk.id = intTk;
 					tk.value.assign("intTk " + read_value);
 					break;
