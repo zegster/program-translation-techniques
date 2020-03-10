@@ -61,8 +61,7 @@ void tokenToString(Token tk)
 int isOperator(char ch)
 {
 	//Return 1 when input character is an operator
-	for(unsigned int i = 0; i < OPERATOR_SIZE; i++)
-	{
+	for(unsigned int i = 0; i < OPERATOR_SIZE; i++) {
 		if(ch == operators[i]) {
 			return 1;
 		}
@@ -74,13 +73,48 @@ int isOperator(char ch)
 }
 
 
-int isKeyword(Token &tk)
+int isNonSingleOperator(string str)
+{
+	//Return 1 when input string is a non-single operator
+	for(unsigned int i = 0; i < NS_OPERATOR_SIZE; i++) {
+		if(str.compare(ns_operators[i]) == 0) {
+			return 1;
+		}
+	}
+
+	//Return -1 when input character is not a non-single operator
+	return -1;
+}
+
+int getOperator(Token &tk)
+{
+	//Return operator key when input token is an operator
+	//Check single character operator
+	for(unsigned int i = 0; i < OPERATOR_SIZE; i++) {
+		string op(1, operators[i]);
+		if(tk.value.compare(op) == 0) {
+			tk.value = operator_map[tk.value];
+			return i;
+		}
+	}
+
+	//Check non-single character operator
+	for(unsigned int i = 0; i < NS_OPERATOR_SIZE; i++) {
+		if(tk.value.compare(ns_operators[i]) == 0) {
+			tk.value = operator_map[tk.value];
+			return i;
+		}
+	}
+
+	//Return -1 when input token is not a keyword
+	return -1;
+}
+
+int getKeyword(Token &tk)
 {
 	//Return keyword key when input token is a keyword
-	for(unsigned int i = 0; i < KEYWORD_SIZE; i++)
-	{
-		if(tk.value.compare(keywords[i]) == 0)
-		{
+	for(unsigned int i = 0; i < KEYWORD_SIZE; i++) {
+		if(tk.value.compare(keywords[i]) == 0) {
 			tk.value = keyword_map[tk.value];
 			return i;
 		}

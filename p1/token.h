@@ -18,7 +18,8 @@ const string token_names[TOKEN_SIZE] = {
 	"Identfier", "Keyword", "Integer", "Operator", "End Of File"
 };
 
-/* Reserved Keyword Name */
+
+/* Reserved Keyword */
 const int KEYWORD_SIZE = 13;
 const string keywords[KEYWORD_SIZE] = {
 	"label", "goto", "loop", "void", "declare", "return",
@@ -26,16 +27,23 @@ const string keywords[KEYWORD_SIZE] = {
 	"data"
 };
 
-/* Operator Name (note that "operator" is a reserve word for C++) */
+
+/* Operator (note that "operator" is a reserve word for C++) */
 const int OPERATOR_SIZE = 19;
-const char COMMENT_DELIMITER = '#';
 const char operators[OPERATOR_SIZE] = {
 	'#', '=', '<', '>', ':',
 	'+', '-', '*', '/', '%',
 	'.', ',', ';', '(', ')',
 	'{', '}', '[', ']'
 };
+const int NS_OPERATOR_SIZE = 2;
+const string ns_operators[NS_OPERATOR_SIZE] = {
+	":=", "=="
+};
 
+
+/* Delimiter */
+const char COMMENT_DELIMITER = '#';
 
 
 /* Token Structure */
@@ -45,6 +53,7 @@ typedef struct token
 	int line_number;
 	string value;
 } Token;
+
 
 /* Operator Map & Keyword Map */
 /* Allow scanner to access from it */
@@ -57,7 +66,9 @@ void initOperatorMap();
 void initKeywordMap();
 void tokenToString(Token tk);
 int isOperator(char ch);
-int isKeyword(Token &tk);
+int isNonSingleOperator(string str);
+int getOperator(Token &tk);
+int getKeyword(Token &tk);
 
 #endif
 

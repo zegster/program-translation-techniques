@@ -70,7 +70,6 @@ int scanner(int current_line, string &input, Token &tk)
 		//Check to see if this were an error state. Return -1 if it is.
 		if(next_state < 0) {
 			getError(current_line, next_state, next_char);
-			exit(EXIT_FAILURE);
 			return -1;
 		}
 		//Check to see if this were the final state. Return 0 if it is.
@@ -82,7 +81,7 @@ int scanner(int current_line, string &input, Token &tk)
 			switch(next_state)
 			{
 				case STATE_ID: //Identfier
-					if(isKeyword(tk) != -1) { //Keyword?
+					if(getKeyword(tk) != -1) { //Keyword?
 						tk.id = keywordTk;
 						tk.value.append(" " + read_value);
 					}
@@ -95,6 +94,23 @@ int scanner(int current_line, string &input, Token &tk)
 				case STATE_INT: //Integer
 					tk.id = intTk;
 					tk.value.assign("intTk " + read_value);
+					break;
+
+				case STATE_OP:
+					tk.id = opTk;
+					
+					//Check to see if it non-single operator
+					if(current_scanner_pointer < input.length()) {
+						string ns_operator = read_value + input.at(current_scanner_pointer);
+						if(isNonSingleOperator(ns_operator) != -1) {
+							read_value = ns_operator;
+							current_scanner_pointer++;
+						}
+					}
+
+					tk.value.assign(read_value);
+					getOperator(tk);
+					tk.value.append(" " + read_value);
 					break;
 			}
 			return 0;
