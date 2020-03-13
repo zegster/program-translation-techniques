@@ -10,6 +10,7 @@
 map<string, string> operator_map;
 map<string, string> keyword_map;
 
+//void Language::initOperatorMap()
 void initOperatorMap()
 {
 	operator_map.insert(make_pair(":=", "colonEqualTk"));
@@ -35,6 +36,7 @@ void initOperatorMap()
 }
 
 
+//void Language::initKeywordMap()
 void initKeywordMap()
 {
 	keyword_map.insert(make_pair("label", "labelTk"));
@@ -52,12 +54,15 @@ void initKeywordMap()
 	keyword_map.insert(make_pair("data", "dataTk"));
 }
 
+
+//void Language::tokenToString(Token tk)
 void tokenToString(Token tk)
 {
 	cout << "Line #" << tk.line_number << ": " << token_names[tk.id] << " | " << tk.value << endl; 
 }
 
 
+//int Language::isOperator(char ch)
 int isOperator(char ch)
 {
 	//Return 1 when input character is an operator
@@ -73,10 +78,11 @@ int isOperator(char ch)
 }
 
 
+//int Language::isNonSingleOperator(string str)
 int isNonSingleOperator(string str)
 {
 	//Return 1 when input string is a non-single operator
-	for(unsigned int i = 0; i < NS_OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < ns_operators.size(); i++) {
 		if(str.compare(ns_operators[i]) == 0) {
 			return 1;
 		}
@@ -86,6 +92,8 @@ int isNonSingleOperator(string str)
 	return -1;
 }
 
+
+//int Language::getOperator(Token &tk)
 int getOperator(Token &tk)
 {
 	//Return operator key when input token is an operator
@@ -99,7 +107,7 @@ int getOperator(Token &tk)
 	}
 
 	//Check non-single character operator
-	for(unsigned int i = 0; i < NS_OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < ns_operators.size(); i++) {
 		if(tk.value.compare(ns_operators[i]) == 0) {
 			tk.value = operator_map[tk.value];
 			return i;
@@ -110,10 +118,12 @@ int getOperator(Token &tk)
 	return -1;
 }
 
+
+//int Language::getKeyword(Token &tk)
 int getKeyword(Token &tk)
 {
 	//Return keyword key when input token is a keyword
-	for(unsigned int i = 0; i < KEYWORD_SIZE; i++) {
+	for(unsigned int i = 0; i < keywords.size(); i++) {
 		if(tk.value.compare(keywords[i]) == 0) {
 			tk.value = keyword_map[tk.value];
 			return i;
@@ -123,3 +133,4 @@ int getKeyword(Token &tk)
 	//Return -1 when input token is not a keyword
 	return -1;
 }
+

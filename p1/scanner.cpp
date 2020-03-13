@@ -6,6 +6,11 @@
 ==================================================================================================== */
 #include "scanner.h"
 
+void Scanner::test()
+{
+	cout << merp << endl;
+}
+
 int getCategory(char ch)
 {
 	//Refer to FSA_TABLE in scanner.h
@@ -66,9 +71,8 @@ char checkComment(int current_line, char ch)
 
 
 unsigned int current_scanner_pointer = 0;
-int scanner(int current_line, string &input, Token &tk)
+int scan(int current_line, string &input, Token &tk)
 {
-
 	//Set current line number for the current token
 	tk.line_number = current_line;
 
@@ -155,6 +159,7 @@ int scanner(int current_line, string &input, Token &tk)
 	}
 
 	//When scanner pointer is looking at the end of the input, end scanner.
+	resetScannerPointer();
 	return -1;
 }
 

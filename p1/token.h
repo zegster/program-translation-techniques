@@ -12,39 +12,38 @@
 #include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 using namespace std;
 
+
+/* Language Class */
 class Language
 {
-	private:
-
 	public:
+	string merp = "merp";
 };
 
+
 /* Token Categories */
-const int TOKEN_SIZE = 5;
 enum token_id { idTk, keywordTk, intTk, opTk, eofTk };
-const string token_names[TOKEN_SIZE] = { 
+const vector<string> token_names = { 
 	"Identfier", "Keyword", "Integer", "Operator", "End Of File"
 };
 
 
 /* Reserved Keyword */
-const int KEYWORD_SIZE = 13;
-const string keywords[KEYWORD_SIZE] = {
+const vector<string> keywords = {
 	"label", "goto", "loop", "void", "declare", "return",
 	"in", "out", "program", "iffy", "then", "assign",
 	"data"
 };
 
 
-/* Operator (note that "operator" is a reserve word for C++) */
+/* Operator */
 const vector<char> operators = {
 	'=', '<', '>', ':',
 	'+', '-', '*', '/', '%',
 	'.', ',', ';', '(', ')',
 	'{', '}', '[', ']'
 };
-const int NS_OPERATOR_SIZE = 2;
-const string ns_operators[NS_OPERATOR_SIZE] = {
+const vector<string> ns_operators = {
 	":=", "=="
 };
 
@@ -63,7 +62,8 @@ typedef struct token
 
 
 /* Operator Map & Keyword Map */
-/* Allow scanner to access from it */
+//map<string, string> operator_map;
+//map<string, string> keyword_map;
 extern map<string, string> operator_map;
 extern map<string, string> keyword_map;
 
@@ -76,6 +76,5 @@ int isOperator(char ch);
 int isNonSingleOperator(string str);
 int getOperator(Token &tk);
 int getKeyword(Token &tk);
-
 #endif
 

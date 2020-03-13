@@ -16,9 +16,12 @@
 #include "token.h"
 using namespace std;
 
-/* The FSA table with rows (states) and columns (categories) */
-const int ROWS = 4;
-const int COLUMNS = 6;
+
+class Scanner: public Language
+{
+	public:
+	void test();
+};
 
 /* All possible states in the FSA table */
 const int ERROR_UNK = -3;    //Error Unknown State
@@ -35,6 +38,8 @@ const int STATE_OP = 1004;   //Operator Final State
 const int STATE_EOF = 1005;  //EOF Final State
 
 /* Visual representation of the FSA table:
+ROWS: 4
+COLUMNS: 6
 -------------------------------------------------------------------------
 | letter    | digit     | ws        | EOF       | operator  | other     |
 -------------------------------------------------------------------------
@@ -47,7 +52,7 @@ const int STATE_EOF = 1005;  //EOF Final State
 | ERROR_INT | STATE_3   | STATE_INT | STATE_INT | STATE_INT | ERROR_UNK | s3 (integer)
 -------------------------------------------------------------------------
 */
-const int FSA_TABLE[ROWS][COLUMNS] = {
+const int FSA_TABLE[4][6] = {
 	{ STATE_2, STATE_3, STATE_0, STATE_EOF, STATE_1, ERROR_UNK },
 	{ STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP, ERROR_UNK },
 	{ STATE_2, STATE_2, STATE_ID, STATE_ID, STATE_ID, ERROR_UNK },
@@ -67,7 +72,7 @@ const char SCANNER_DELIMITER = ' ';
 int getCategory(char ch);
 void getError(int current_line, int state, char ch);
 char checkComment(int current_line, char ch);
-int scanner(int current_line, string &input, Token &tk);
+int scan(int current_line, string &input, Token &tk);
 void resetScannerPointer();
 void isCommentMode();
 

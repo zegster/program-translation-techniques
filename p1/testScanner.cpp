@@ -14,19 +14,20 @@ int testScanner(string file_name)
 	//Init operator and keyword map
 	initOperatorMap();
 	initKeywordMap();
+
+	Scanner scanner;
+	scanner.test();
 	
-	//Check if teh file is open and associated with the stream object
+	//Check if the file is open and associated with the stream object
 	ifstream file(file_name.c_str());
 	unsigned int current_line = 1;  //Keep track of the current line number of the file
 	Token token;                    //Token holder for displaying purpose (can be useful later in the future...)
 	if(file.is_open()) {
 		string input;
 		while(getline(file, input)) {
-			//Filter input by removing comments and whitespace
-
 			//Invoke scanner() until each token in the current line has been identified
-			resetScannerPointer();
-			while(scanner(current_line, input, token) == 0) {
+			//while(scanner(current_line, input, token) == 0) {
+			while(scan(current_line, input, token) == 0) {
 				tokenToString(token);
 			}
 
