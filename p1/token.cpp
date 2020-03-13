@@ -61,7 +61,6 @@ void tokenToString(Token tk)
 int isOperator(char ch)
 {
 	//Return 1 when input character is an operator
-	//for(unsigned int i = 0; i < OPERATOR_SIZE; i++) {
 	for(unsigned int i = 0; i < operators.size(); i++) {
 		if(ch == operators[i]) {
 			return 1;
@@ -91,7 +90,7 @@ int getOperator(Token &tk)
 {
 	//Return operator key when input token is an operator
 	//Check single character operator
-	for(unsigned int i = 0; i < OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < operators.size(); i++) {
 		string op(1, operators[i]);
 		if(tk.value.compare(op) == 0) {
 			tk.value = operator_map[tk.value];

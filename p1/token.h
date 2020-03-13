@@ -37,8 +37,6 @@ const string keywords[KEYWORD_SIZE] = {
 
 
 /* Operator (note that "operator" is a reserve word for C++) */
-const int OPERATOR_SIZE = 18;
-//const char operators[OPERATOR_SIZE] = {
 const vector<char> operators = {
 	'=', '<', '>', ':',
 	'+', '-', '*', '/', '%',
