@@ -8,8 +8,16 @@
 #define TOKEN_H
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
-#include <map>           //Dictionary like data structure
+#include <map>           //Dictionary like data structure.
+#include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 using namespace std;
+
+class Language
+{
+	private:
+
+	public:
+};
 
 /* Token Categories */
 const int TOKEN_SIZE = 5;
@@ -30,7 +38,8 @@ const string keywords[KEYWORD_SIZE] = {
 
 /* Operator (note that "operator" is a reserve word for C++) */
 const int OPERATOR_SIZE = 18;
-const char operators[OPERATOR_SIZE] = {
+//const char operators[OPERATOR_SIZE] = {
+const vector<char> operators = {
 	'=', '<', '>', ':',
 	'+', '-', '*', '/', '%',
 	'.', ',', ';', '(', ')',
