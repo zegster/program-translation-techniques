@@ -28,12 +28,13 @@ int testScanner(string file_name)
 			resetScannerPointer();
 			while(scanner(current_line, input, token) == 0) {
 				tokenToString(token);
-				sleep(1);
 			}
 
 			//Increment the currnet line in the file
 			current_line++;
 		}
+		
+		isCommentMode();
 	}
 	else {
 		cout << "[ERROR] Can't open file!" << endl;

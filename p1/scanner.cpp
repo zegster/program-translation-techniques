@@ -29,22 +29,46 @@ int getCategory(char ch)
 
 void getError(int current_line, int state, char ch)
 {
-	cout << "ERROR on line #" << current_line << " -> [" << ch << "]: ";
+	cout << "[ERROR] at (" << current_line << ":" << current_scanner_pointer << ") -> {" << ch << "]: ";
 	if(state == ERROR_INT) {
 		cout << "all integer token must contain only digits." << endl;
-		cout << "ERROR: " << ERROR_INT << endl;
+		cout << "[ERROR] code: " << ERROR_INT << endl;
 	}
 	else if(state == ERROR_UNK) {
 		cout << "unknown token is not allow." << endl;
-		cout << "ERROR: " << ERROR_UNK << endl;
+		cout << "[ERROR] code: " << ERROR_UNK << endl;
 	}
 }
 
+
+bool isCommenting = false;
+string lastCommentPosition = "merp";
+char checkComment(int current_line, char ch)
+{
+	if(ch == COMMENT_DELIMITER) {
+		isCommenting = (isCommenting == true) ? false : true;
+		
+		if(isCommenting) {
+			ostringstream temp;
+			temp << current_line << ":" << current_scanner_pointer;
+			lastCommentPosition = temp.str();
+		}
+		return SCANNER_DELIMITER;
+	}
+
+	if(isCommenting) {
+		return SCANNER_DELIMITER;
+	}
+	else {
+		return ch;
+	}
+}
 
 
 unsigned int current_scanner_pointer = 0;
 int scanner(int current_line, string &input, Token &tk)
 {
+
 	//Set current line number for the current token
 	tk.line_number = current_line;
 
@@ -55,12 +79,13 @@ int scanner(int current_line, string &input, Token &tk)
 	string read_value;               //The current reading value of the token
 	char next_char;                  //Keep track of the current token of the input
 
+	//Continue looping until scanner pointer is less than or equal to the string it compare
 	while(current_scanner_pointer <= input.length()) {
 		if(current_scanner_pointer < input.length()) {
-			next_char = input.at(current_scanner_pointer);
+			next_char = checkComment(current_line, input.at(current_scanner_pointer));
 		} 
 		else {
-			next_char = ' ';
+			next_char = SCANNER_DELIMITER;
 		}
 
 		//Look at FSA Table and obtain the next state (row)
@@ -70,7 +95,7 @@ int scanner(int current_line, string &input, Token &tk)
 		//Check to see if this were an error state. Return -1 if it is.
 		if(next_state < 0) {
 			getError(current_line, next_state, next_char);
-			return -1;
+			//exit(EXIT_FAILURE);  //Uncomment this if you want the scanner to stop scanning when encounting error
 		}
 		//Check to see if this were the final state. Return 0 if it is.
 		else if(next_state > STATE_F) {
@@ -78,8 +103,7 @@ int scanner(int current_line, string &input, Token &tk)
 			tk.value = read_value;
 
 			//Look for a specific final state and assign the token holder with appropriate id and value
-			switch(next_state)
-			{
+			switch(next_state) {
 				case STATE_ID: //Identfier
 					if(getKeyword(tk) != -1) { //Keyword?
 						tk.id = keywordTk;
@@ -96,7 +120,7 @@ int scanner(int current_line, string &input, Token &tk)
 					tk.value.assign("intTk " + read_value);
 					break;
 
-				case STATE_OP:
+				case STATE_OP: //Operator
 					tk.id = opTk;
 					
 					//Check to see if it non-single operator
@@ -112,6 +136,10 @@ int scanner(int current_line, string &input, Token &tk)
 					getOperator(tk);
 					tk.value.append(" " + read_value);
 					break;
+			}
+
+			if(isCommenting) {
+				current_scanner_pointer++;
 			}
 			return 0;
 		}
@@ -135,3 +163,12 @@ void resetScannerPointer()
 {
 	current_scanner_pointer = 0;
 }
+
+
+void isCommentMode()
+{
+	if(isCommenting) {
+		cout << "[WARNING] at (" << lastCommentPosition << ") -> comment tag never close, was this on purpose?" << endl;
+	}
+}
+

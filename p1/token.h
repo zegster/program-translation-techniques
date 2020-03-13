@@ -29,9 +29,9 @@ const string keywords[KEYWORD_SIZE] = {
 
 
 /* Operator (note that "operator" is a reserve word for C++) */
-const int OPERATOR_SIZE = 19;
+const int OPERATOR_SIZE = 18;
 const char operators[OPERATOR_SIZE] = {
-	'#', '=', '<', '>', ':',
+	'=', '<', '>', ':',
 	'+', '-', '*', '/', '%',
 	'.', ',', ';', '(', ')',
 	'{', '}', '[', ']'
@@ -49,9 +49,9 @@ const char COMMENT_DELIMITER = '#';
 /* Token Structure */
 typedef struct token
 {
-	token_id id;
-	int line_number;
-	string value;
+	token_id id;        //The id that represent the token category
+	int line_number;    //Line location of where the token reside
+	string value;       //The description value of the token
 } Token;
 
 

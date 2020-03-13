@@ -11,6 +11,8 @@
 #include <cstring>       //Defines several functions to manipulate C strings and arrays.
 #include <cctype>        //Classify and transform individual characters.
 #include <cstdlib>       //Defines several general purpose functions.
+#include <sstream>       //Header providing string stream classes.
+#include <cstdio>        //Composes a string with the same text that would be printed.
 #include "token.h"
 using namespace std;
 
@@ -55,12 +57,19 @@ const int FSA_TABLE[ROWS][COLUMNS] = {
 
 /* Scanner Tracker */
 extern unsigned int current_scanner_pointer; //Keep track when the scanner is finish scanning the current input. Must init to 0.
+extern bool isCommenting;                    //Keep track when the scanner encounter a comment.
+extern string lastCommentPosition;
+
+/* Scanner Delimiter */
+const char SCANNER_DELIMITER = ' ';
 
 /* Scanner Function Prototype */
 int getCategory(char ch);
 void getError(int current_line, int state, char ch);
+char checkComment(int current_line, char ch);
 int scanner(int current_line, string &input, Token &tk);
 void resetScannerPointer();
+void isCommentMode();
 
 #endif
 
