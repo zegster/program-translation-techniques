@@ -1,5 +1,5 @@
 # Project 1 - Scanner
-> Note: program implemented using FSA table and driver.
+> Note: program implemented using FSA table and driver. More detail at Documentation section.
 
 We will be implementing a scanner for the provided lexical definitions. The scanner is embedded and thus it will return one token every time it is called. Since the parser is not available yet, we will use a tester program to call the scanner. 
 
@@ -51,4 +51,66 @@ We will be implementing a scanner for the provided lexical definitions. The scan
     * Any sequence of decimal digits with no sign and no decimal point 
     * You may assume no number longer than 8 characters in testing 
 8. Comments start with # and end with # 
+
+##
+
+#### Suggestions
+* Token is a triplet {tokenID, tokenInstance, line#} (if option with line numbers) 
+* tokenID can be enumeration (better) or symbolic constant (worse) 
+* tokenInstance can be a string or can be some reference to a string table 
+* the triplet can be struct 
+* Suggestions for the string reader (option #1)
+    * Implement scanner as 'scanf("%s",data)' and then processing data as below 
+        * If starts with lower case letter then it is identifier but check against keywords
+        * If starts with a digit then it is an integer token
+        * Then it must be operator or delimiter, you may use one group or look what it is and split various tokens (this could be easily done through an associative array)
+* Suggestions for the FA (option #3)
+    * File can be opened and lookahead character can be set explicitly before the first call to the scanner for the first token
+    * Have the scanner not read directly from the file but from a filter. The filter would count lines, skip over spaces and comments, construct string of characters for the current token, and return the column number in the table corresponding to the character 
+    * Represent the 2-d array for the FSA as array of integers 
+        * 0, 1, etc would be states/rows 
+        * -1, -2, etc could be different errors
+        * 1001, 1002, etc could be final states recognizing different tokens
+    * Recognize keywords as identifiers in the automaton, then do table lookup 
+* Suggestion to print tokens is an array of strings describing the tokens, listed in the same order as the tokenID enumeration. For example: 
+    * enum tokenID {IDENT_tk, NUM_tk, KW_tk, etc};
+    * string tokenNames[] ={"Identifier", "Number", "Keyword", etc};
+    * struct token { tokenID, string, int};
+
+##
+
+#### Testing Suggestions
+* **[P1_test1.sp2020]** containing just one character (with standard \n at the end).
+    * X
+* **[P1_test2.sp2020]** containing a list of all the tokens listed, all separated by a space or newline. For ids, use X, Xy, and Xyz, for numbers, use 1, 12, and 23.
+    * X Xy Xyz 1 12 23
+* **[P1_test3.sp2020]** containing a mix of tokens without spaces and with spaces. If WS not required, create another file where some token from above are combined w/o WS (as long as the token combination doesnt create a new token).
+    * X  X+ Xy X>:=Xyz
+* **[P1_test4.sp2020]** containing some extra comments (it should not change the outputs).
+    * x x23 multi#comment is here#line
+
+##
+
+#### Documentation
+* Third option was selected, which is an FSA table + driver.
+    * In main.cpp, after verifying the file exists and can be opened, the main() function calls testScanner(), which in turn calls Scanner::scan() for each line in the input file.
+    * The FSA table is defined in the scanner.h file. The driver function, testScanner(), is implemented in testScanner.cpp.
+    * The checkComment() function check for comment delimiter and ignore all the input if found one. Once an ending tag is found, restore scanner back to normal operation. The Scanner::checkComment() function is implemented in scanner.cpp,
+    * The Scanner::scan() will identify the token using the state transition table, and if the table does not return an error state, the scanner() will return the token to testScanner(). Then, testScanner() will display the line number, token name, and token description of the token.
+    * For each line of input from the file (or redirected file or keyboard), the testScanner() will do the above until the EOF is reached.
+
+##
+
+#### HOW TO RUN
+1. In your command promt, type: make
+2. This will generate .o file and executable file
+3. To use the program, type: ./scanner [file] (or the name of your a.out)
+
+**Examples of invocations**
+```
+    ./scanner
+    ./scanner < P1_test1.sp2020
+    ./scanner P1_test3.sp2020
+    ./scanner P1_test5
+```
 

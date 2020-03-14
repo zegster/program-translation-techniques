@@ -76,7 +76,7 @@ void Scanner::getError(int current_line, int state, char ch)
 char Scanner::checkComment(int current_line, char ch)
 {
 	if(ch == COMMENT_DELIMITER) {
-		isCommenting = (isCommenting == true) ? false : true;
+		isCommenting = !isCommenting;
 		
 		if(isCommenting) {
 			ostringstream temp;
