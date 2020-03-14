@@ -6,11 +6,13 @@
 ==================================================================================================== */
 #include "token.h"
 
-/* Extern Variable from token.h */
-map<string, string> operator_map;
-map<string, string> keyword_map;
-
-void initOperatorMap()
+/* ====================================================================================================
+* Function    :  initOperatorMap()
+* Definition  :  populate the operator map with the choosen lexical.
+* Parameter   :  none.
+* Return      :  none.
+==================================================================================================== */
+void Language::initOperatorMap()
 {
 	operator_map.insert(make_pair(":=", "colonEqualTk"));
 	operator_map.insert(make_pair("==", "equalEqualTk"));
@@ -35,7 +37,13 @@ void initOperatorMap()
 }
 
 
-void initKeywordMap()
+/* ====================================================================================================
+* Function    :  initKeywordMap()
+* Definition  :  populate the keyword map with the choosen lexical.
+* Parameter   :  none. 
+* Return      :  none.
+==================================================================================================== */
+void Language::initKeywordMap()
 {
 	keyword_map.insert(make_pair("label", "labelTk"));
 	keyword_map.insert(make_pair("goto", "gotoTk"));
@@ -52,31 +60,51 @@ void initKeywordMap()
 	keyword_map.insert(make_pair("data", "dataTk"));
 }
 
-void tokenToString(Token tk)
+
+/* ====================================================================================================
+* Function    :  printToken()
+* Definition  :  display the line number of the token, followed by the category of the token (Identifier, 
+                  Integer, Operator, etc), followed by the specific token name (IDtk, THENtk, etc), 
+                  followed by the token description (value of the token).
+* Parameter   :  struct Token.
+* Return      :  none.
+==================================================================================================== */
+void Language::tokenToString(Token tk)
 {
 	cout << "Line #" << tk.line_number << ": " << token_names[tk.id] << " | " << tk.value << endl; 
 }
 
 
-int isOperator(char ch)
+/* ====================================================================================================
+* Function    :  isOperator()
+* Definition  :  return true (1) or false (-1) if the input char is an operator.
+* Parameter   :  char. 
+* Return      :  true or false (int)
+==================================================================================================== */
+int Language::isOperator(char ch)
 {
 	//Return 1 when input character is an operator
-	for(unsigned int i = 0; i < OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < operators.size(); i++) {
 		if(ch == operators[i]) {
 			return 1;
 		}
 	}
 	
 	//Return -1 when input character is not an operator
-	//Becareful how you check in conditional statement
 	return -1;
 }
 
 
-int isNonSingleOperator(string str)
+/* ====================================================================================================
+* Function    :  isNonSingleOperator()()
+* Definition  :  return true (1) or false (-1) if the input char is a non-single operator.
+* Parameter   :  string.
+* Return      :  true or false (int)
+==================================================================================================== */
+int Language::isNonSingleOperator(string str)
 {
 	//Return 1 when input string is a non-single operator
-	for(unsigned int i = 0; i < NS_OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < ns_operators.size(); i++) {
 		if(str.compare(ns_operators[i]) == 0) {
 			return 1;
 		}
@@ -86,11 +114,17 @@ int isNonSingleOperator(string str)
 	return -1;
 }
 
-int getOperator(Token &tk)
+
+/* ====================================================================================================
+* Function    :  getOperator()
+* Definition  :  return single or non-single operator key (assuming it already been verify it's an operator).
+* Parameter   :  struct token.
+* Return      :  operator key (int).
+==================================================================================================== */
+int Language::getOperator(Token &tk)
 {
-	//Return operator key when input token is an operator
 	//Check single character operator
-	for(unsigned int i = 0; i < OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < operators.size(); i++) {
 		string op(1, operators[i]);
 		if(tk.value.compare(op) == 0) {
 			tk.value = operator_map[tk.value];
@@ -99,7 +133,7 @@ int getOperator(Token &tk)
 	}
 
 	//Check non-single character operator
-	for(unsigned int i = 0; i < NS_OPERATOR_SIZE; i++) {
+	for(unsigned int i = 0; i < ns_operators.size(); i++) {
 		if(tk.value.compare(ns_operators[i]) == 0) {
 			tk.value = operator_map[tk.value];
 			return i;
@@ -110,10 +144,17 @@ int getOperator(Token &tk)
 	return -1;
 }
 
-int getKeyword(Token &tk)
+
+/* ====================================================================================================
+* Function    :  getKeyword()
+* Definition  :  return keyword key if it's a keyword.
+* Parameter   :  struct token.
+* Return      :  keyword key (int).
+==================================================================================================== */
+int Language::getKeyword(Token &tk)
 {
 	//Return keyword key when input token is a keyword
-	for(unsigned int i = 0; i < KEYWORD_SIZE; i++) {
+	for(unsigned int i = 0; i < keywords.size(); i++) {
 		if(tk.value.compare(keywords[i]) == 0) {
 			tk.value = keyword_map[tk.value];
 			return i;
@@ -123,3 +164,4 @@ int getKeyword(Token &tk)
 	//Return -1 when input token is not a keyword
 	return -1;
 }
+

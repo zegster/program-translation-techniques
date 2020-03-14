@@ -8,43 +8,12 @@
 #define TOKEN_H
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
-#include <map>           //Dictionary like data structure
+#include <map>           //Dictionary like data structure.
+#include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 using namespace std;
 
-/* Token Categories */
-const int TOKEN_SIZE = 5;
+/* Enumeration */
 enum token_id { idTk, keywordTk, intTk, opTk, eofTk };
-const string token_names[TOKEN_SIZE] = { 
-	"Identfier", "Keyword", "Integer", "Operator", "End Of File"
-};
-
-
-/* Reserved Keyword */
-const int KEYWORD_SIZE = 13;
-const string keywords[KEYWORD_SIZE] = {
-	"label", "goto", "loop", "void", "declare", "return",
-	"in", "out", "program", "iffy", "then", "assign",
-	"data"
-};
-
-
-/* Operator (note that "operator" is a reserve word for C++) */
-const int OPERATOR_SIZE = 18;
-const char operators[OPERATOR_SIZE] = {
-	'=', '<', '>', ':',
-	'+', '-', '*', '/', '%',
-	'.', ',', ';', '(', ')',
-	'{', '}', '[', ']'
-};
-const int NS_OPERATOR_SIZE = 2;
-const string ns_operators[NS_OPERATOR_SIZE] = {
-	":=", "=="
-};
-
-
-/* Delimiter */
-const char COMMENT_DELIMITER = '#';
-
 
 /* Token Structure */
 typedef struct token
@@ -54,21 +23,49 @@ typedef struct token
 	string value;       //The description value of the token
 } Token;
 
+/* Language Class */
+class Language
+{
+	protected:
+		//Operator Map & Keyword Map
+		map<string, string> operator_map;
+		map<string, string> keyword_map;
 
-/* Operator Map & Keyword Map */
-/* Allow scanner to access from it */
-extern map<string, string> operator_map;
-extern map<string, string> keyword_map;
+		//Token Categories (should match with token_id enum)
+		const vector<string> token_names = { 
+			"Identfier", "Keyword", "Integer", "Operator", "End Of File"
+		};
 
+		//Reserved Keyword
+		const vector<string> keywords = {
+			"label", "goto", "loop", "void", "declare", 
+			"return", "in", "out", "program", "iffy", 
+			"then", "assign", "data"
+		};
 
-/* Token Function Prototype */
-void initOperatorMap();
-void initKeywordMap();
-void tokenToString(Token tk);
-int isOperator(char ch);
-int isNonSingleOperator(string str);
-int getOperator(Token &tk);
-int getKeyword(Token &tk);
+		//Delimiter
+		const char COMMENT_DELIMITER = '#';
 
+		//Operator (single and non-single)
+		const vector<char> operators = {
+			'=', '<', '>', ':',
+			'+', '-', '*', '/', '%',
+			'.', ',', ';', '(', ')',
+			'{', '}', '[', ']'
+		};
+		const vector<string> ns_operators = {
+			":=", "=="
+		};
+	
+		void initOperatorMap();
+		void initKeywordMap();
+		int isOperator(char ch);
+		int isNonSingleOperator(string str);
+		int getOperator(Token &tk);
+		int getKeyword(Token &tk);
+
+	public:
+		void tokenToString(Token tk);
+};
 #endif
 

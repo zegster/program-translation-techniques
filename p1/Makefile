@@ -1,5 +1,5 @@
 CC         = g++
-CFLAGS     = -Wall -g
+CFLAGS     = -Wall -g -std=c++11
 
 MASTER_SRC = main.cpp
 SRC        = token.h scanner.h testScanner.h

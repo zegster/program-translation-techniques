@@ -7,34 +7,35 @@
 #include "token.h"
 #include "scanner.h"
 #include "testScanner.h"
-#include <unistd.h>
 
+
+/* ====================================================================================================
+* Function    :  testScanner()
+* Definition  :  a simple function to test out the scanner.
+* Parameter   :  an input file_name (string)
+* Return      :  status code where error will return -1.
+==================================================================================================== */
 int testScanner(string file_name)
 {
-	//Init operator and keyword map
-	initOperatorMap();
-	initKeywordMap();
+	//Init Scanner Object
+	Scanner scanner;
 	
-	//Check if teh file is open and associated with the stream object
+	//Check if the file is open and associated with the stream object
 	ifstream file(file_name.c_str());
 	unsigned int current_line = 1;  //Keep track of the current line number of the file
 	Token token;                    //Token holder for displaying purpose (can be useful later in the future...)
 	if(file.is_open()) {
 		string input;
 		while(getline(file, input)) {
-			//Filter input by removing comments and whitespace
-
 			//Invoke scanner() until each token in the current line has been identified
-			resetScannerPointer();
-			while(scanner(current_line, input, token) == 0) {
-				tokenToString(token);
+			while(scanner.scan(current_line, input, token) == 0) {
+				scanner.tokenToString(token);
 			}
-
-			//Increment the currnet line in the file
-			current_line++;
+			current_line++;  //Increment the currnet line in the file when finish reading the current input
 		}
 		
-		isCommentMode();
+		//Check for any open comment tag
+		scanner.isCommentMode();
 	}
 	else {
 		cout << "[ERROR] Can't open file!" << endl;
@@ -52,13 +53,11 @@ int testScanner(string file_name)
 		token.line_number = current_line;
 		token.id = eofTk;
 		token.value = "EOF";
-		tokenToString(token);
+		scanner.tokenToString(token);
 	}
 
+	//Close the reading file
 	file.close();
 	return 0;
 }
-
-
-
 

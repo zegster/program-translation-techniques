@@ -12,10 +12,7 @@
 #include <fstream>       //Input and output stream class to operate on files.
 using namespace std;
 
-/* TestScanner Function Prototype */
 int testScanner(string file_name);
-int filter(string &);
-int isValidChar(char);
 
 #endif
 
