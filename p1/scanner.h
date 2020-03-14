@@ -16,65 +16,59 @@
 #include "token.h"
 using namespace std;
 
-
+/* Scanner Class */
 class Scanner: public Language
 {
+	private:
+		//Scanner Tracker
+		unsigned int current_scanner_pointer = -1;  //Keep track when the scanner is finish scanning the current input. Must init to 0.
+		bool isCommenting = false;                  //Keep track when the scanner encounter a comment.
+		string lastCommentPosition = "";            //Keep track the last known open comment tag.
+
+		//All possible states in the FSA table
+		enum {
+			ERROR_UNK = -2,    //Error Unknown State
+			ERROR_INT = -1,    //Error Integer State
+			STATE_0 = 0,       //Initial
+			STATE_1 = 1,       //Operator
+			STATE_2 = 2,       //Identifier
+			STATE_3 = 3,       //Integer
+			STATE_F = 1000,    //Final State
+			STATE_ID = 1001,   //Identifier Final State
+			STATE_INT = 1003,  //Integer Final State
+			STATE_OP = 1004,   //Operator Final State
+			STATE_EOF = 1005   //EOF Final State
+		};
+
+		/* Visual representation of the FSA table: ROWS: 4 | COLUMNS: 6
+		-------------------------------------------------------------------------
+		| letter    | digit     | ws        | EOF       | operator  | other     |
+		-------------------------------------------------------------------------
+		| STATE_2   | STATE_3   | STATE_0   | STATE_EOF | STATE_1   | ERROR_UNK | s0 (initial)
+		-------------------------------------------------------------------------
+		| STATE_OP  | STATE_OP  | STATE_OP  | STATE_OP  | STATE_OP  | ERROR_UNK | s1 (operator)
+		-------------------------------------------------------------------------
+		| STATE_2   | STATE_2   | STATE_ID  | STATE_ID  | STATE_ID  | ERROR_UNK | s2 (identifier)
+		-------------------------------------------------------------------------
+		| ERROR_INT | STATE_3   | STATE_INT | STATE_INT | STATE_INT | ERROR_UNK | s3 (integer)
+		-------------------------------------------------------------------------
+		*/
+		const int FSA_TABLE[4][6] = {
+			{ STATE_2, STATE_3, STATE_0, STATE_EOF, STATE_1, ERROR_UNK },
+			{ STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP, ERROR_UNK },
+			{ STATE_2, STATE_2, STATE_ID, STATE_ID, STATE_ID, ERROR_UNK },
+			{ ERROR_INT, STATE_3, STATE_INT, STATE_INT, STATE_INT, ERROR_UNK }
+		};
+
+		//Scanner Delimiter
+		const char SCANNER_DELIMITER = ' ';
+
 	public:
-	void test();
+		int getCategory(char ch);
+		void getError(int current_line, int state, char ch);
+		char checkComment(int current_line, char ch);
+		void isCommentMode();
+		int scan(int current_line, string &input, Token &tk);
 };
-
-/* All possible states in the FSA table */
-const int ERROR_UNK = -3;    //Error Unknown State
-const int ERROR_INV = -2;
-const int ERROR_INT = -1;    //Error Integer State
-const int STATE_0 = 0;
-const int STATE_1 = 1;
-const int STATE_2 = 2;
-const int STATE_3 = 3;
-const int STATE_F = 1000;    //Final State
-const int STATE_ID = 1001;   //Identifier Final State
-const int STATE_INT = 1003;  //Integer Final State
-const int STATE_OP = 1004;   //Operator Final State
-const int STATE_EOF = 1005;  //EOF Final State
-
-/* Visual representation of the FSA table:
-ROWS: 4
-COLUMNS: 6
--------------------------------------------------------------------------
-| letter    | digit     | ws        | EOF       | operator  | other     |
--------------------------------------------------------------------------
-| STATE_2   | STATE_3   | STATE_0   | STATE_EOF | STATE_1   | ERROR_UNK | s0 (initial)
--------------------------------------------------------------------------
-| STATE_OP  | STATE_OP  | STATE_OP  | STATE_OP  | STATE_OP  | ERROR_UNK | s1 (operator)
--------------------------------------------------------------------------
-| STATE_2   | STATE_2   | STATE_ID  | STATE_ID  | STATE_ID  | ERROR_UNK | s2 (identifier)
--------------------------------------------------------------------------
-| ERROR_INT | STATE_3   | STATE_INT | STATE_INT | STATE_INT | ERROR_UNK | s3 (integer)
--------------------------------------------------------------------------
-*/
-const int FSA_TABLE[4][6] = {
-	{ STATE_2, STATE_3, STATE_0, STATE_EOF, STATE_1, ERROR_UNK },
-	{ STATE_OP, STATE_OP, STATE_OP, STATE_OP, STATE_OP, ERROR_UNK },
-	{ STATE_2, STATE_2, STATE_ID, STATE_ID, STATE_ID, ERROR_UNK },
-	{ ERROR_INT, STATE_3, STATE_INT, STATE_INT, STATE_INT, ERROR_UNK }
-};
-
-
-/* Scanner Tracker */
-extern unsigned int current_scanner_pointer; //Keep track when the scanner is finish scanning the current input. Must init to 0.
-extern bool isCommenting;                    //Keep track when the scanner encounter a comment.
-extern string lastCommentPosition;
-
-/* Scanner Delimiter */
-const char SCANNER_DELIMITER = ' ';
-
-/* Scanner Function Prototype */
-int getCategory(char ch);
-void getError(int current_line, int state, char ch);
-char checkComment(int current_line, char ch);
-int scan(int current_line, string &input, Token &tk);
-void resetScannerPointer();
-void isCommentMode();
-
 #endif
 

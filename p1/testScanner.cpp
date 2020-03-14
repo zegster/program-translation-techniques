@@ -11,12 +11,10 @@
 
 int testScanner(string file_name)
 {
-	//Init operator and keyword map
-	initOperatorMap();
-	initKeywordMap();
-
+	//Init Scanner Object
 	Scanner scanner;
-	scanner.test();
+	scanner.initOperatorMap();
+	scanner.initKeywordMap();
 	
 	//Check if the file is open and associated with the stream object
 	ifstream file(file_name.c_str());
@@ -26,16 +24,13 @@ int testScanner(string file_name)
 		string input;
 		while(getline(file, input)) {
 			//Invoke scanner() until each token in the current line has been identified
-			//while(scanner(current_line, input, token) == 0) {
-			while(scan(current_line, input, token) == 0) {
-				tokenToString(token);
+			while(scanner.scan(current_line, input, token) == 0) {
+				scanner.tokenToString(token);
 			}
-
-			//Increment the currnet line in the file
-			current_line++;
+			current_line++;  //Increment the currnet line in the file when finish reading the current input
 		}
 		
-		isCommentMode();
+		scanner.isCommentMode();
 	}
 	else {
 		cout << "[ERROR] Can't open file!" << endl;
@@ -53,7 +48,7 @@ int testScanner(string file_name)
 		token.line_number = current_line;
 		token.id = eofTk;
 		token.value = "EOF";
-		tokenToString(token);
+		scanner.tokenToString(token);
 	}
 
 	file.close();

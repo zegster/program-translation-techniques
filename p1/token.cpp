@@ -6,12 +6,8 @@
 ==================================================================================================== */
 #include "token.h"
 
-/* Extern Variable from token.h */
-map<string, string> operator_map;
-map<string, string> keyword_map;
 
-//void Language::initOperatorMap()
-void initOperatorMap()
+void Language::initOperatorMap()
 {
 	operator_map.insert(make_pair(":=", "colonEqualTk"));
 	operator_map.insert(make_pair("==", "equalEqualTk"));
@@ -36,8 +32,7 @@ void initOperatorMap()
 }
 
 
-//void Language::initKeywordMap()
-void initKeywordMap()
+void Language::initKeywordMap()
 {
 	keyword_map.insert(make_pair("label", "labelTk"));
 	keyword_map.insert(make_pair("goto", "gotoTk"));
@@ -55,15 +50,13 @@ void initKeywordMap()
 }
 
 
-//void Language::tokenToString(Token tk)
-void tokenToString(Token tk)
+void Language::tokenToString(Token tk)
 {
 	cout << "Line #" << tk.line_number << ": " << token_names[tk.id] << " | " << tk.value << endl; 
 }
 
 
-//int Language::isOperator(char ch)
-int isOperator(char ch)
+int Language::isOperator(char ch)
 {
 	//Return 1 when input character is an operator
 	for(unsigned int i = 0; i < operators.size(); i++) {
@@ -73,13 +66,11 @@ int isOperator(char ch)
 	}
 	
 	//Return -1 when input character is not an operator
-	//Becareful how you check in conditional statement
 	return -1;
 }
 
 
-//int Language::isNonSingleOperator(string str)
-int isNonSingleOperator(string str)
+int Language::isNonSingleOperator(string str)
 {
 	//Return 1 when input string is a non-single operator
 	for(unsigned int i = 0; i < ns_operators.size(); i++) {
@@ -93,8 +84,7 @@ int isNonSingleOperator(string str)
 }
 
 
-//int Language::getOperator(Token &tk)
-int getOperator(Token &tk)
+int Language::getOperator(Token &tk)
 {
 	//Return operator key when input token is an operator
 	//Check single character operator
@@ -119,8 +109,7 @@ int getOperator(Token &tk)
 }
 
 
-//int Language::getKeyword(Token &tk)
-int getKeyword(Token &tk)
+int Language::getKeyword(Token &tk)
 {
 	//Return keyword key when input token is a keyword
 	for(unsigned int i = 0; i < keywords.size(); i++) {

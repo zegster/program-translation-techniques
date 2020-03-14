@@ -12,45 +12,8 @@
 #include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 using namespace std;
 
-
-/* Language Class */
-class Language
-{
-	public:
-	string merp = "merp";
-};
-
-
-/* Token Categories */
+/* Enumeration */
 enum token_id { idTk, keywordTk, intTk, opTk, eofTk };
-const vector<string> token_names = { 
-	"Identfier", "Keyword", "Integer", "Operator", "End Of File"
-};
-
-
-/* Reserved Keyword */
-const vector<string> keywords = {
-	"label", "goto", "loop", "void", "declare", "return",
-	"in", "out", "program", "iffy", "then", "assign",
-	"data"
-};
-
-
-/* Operator */
-const vector<char> operators = {
-	'=', '<', '>', ':',
-	'+', '-', '*', '/', '%',
-	'.', ',', ';', '(', ')',
-	'{', '}', '[', ']'
-};
-const vector<string> ns_operators = {
-	":=", "=="
-};
-
-
-/* Delimiter */
-const char COMMENT_DELIMITER = '#';
-
 
 /* Token Structure */
 typedef struct token
@@ -60,21 +23,48 @@ typedef struct token
 	string value;       //The description value of the token
 } Token;
 
+/* Language Class */
+class Language
+{
+	protected:
+		//Operator Map & Keyword Map
+		map<string, string> operator_map;
+		map<string, string> keyword_map;
 
-/* Operator Map & Keyword Map */
-//map<string, string> operator_map;
-//map<string, string> keyword_map;
-extern map<string, string> operator_map;
-extern map<string, string> keyword_map;
+		//Token Categories (should match with token_id enum)
+		const vector<string> token_names = { 
+			"Identfier", "Keyword", "Integer", "Operator", "End Of File"
+		};
 
+		//Reserved Keyword
+		const vector<string> keywords = {
+			"label", "goto", "loop", "void", "declare", 
+			"return", "in", "out", "program", "iffy", 
+			"then", "assign", "data"
+		};
 
-/* Token Function Prototype */
-void initOperatorMap();
-void initKeywordMap();
-void tokenToString(Token tk);
-int isOperator(char ch);
-int isNonSingleOperator(string str);
-int getOperator(Token &tk);
-int getKeyword(Token &tk);
+		//Delimiter
+		const char COMMENT_DELIMITER = '#';
+
+		//Operator (single and non-single)
+		const vector<char> operators = {
+			'=', '<', '>', ':',
+			'+', '-', '*', '/', '%',
+			'.', ',', ';', '(', ')',
+			'{', '}', '[', ']'
+		};
+		const vector<string> ns_operators = {
+			":=", "=="
+		};
+	
+	public:
+		void initOperatorMap();
+		void initKeywordMap();
+		void tokenToString(Token tk);
+		int isOperator(char ch);
+		int isNonSingleOperator(string str);
+		int getOperator(Token &tk);
+		int getKeyword(Token &tk);
+};
 #endif
 

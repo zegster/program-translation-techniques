@@ -6,12 +6,8 @@
 ==================================================================================================== */
 #include "scanner.h"
 
-void Scanner::test()
-{
-	cout << merp << endl;
-}
 
-int getCategory(char ch)
+int Scanner::getCategory(char ch)
 {
 	//Refer to FSA_TABLE in scanner.h
 	if(isalpha(ch)) {
@@ -32,7 +28,7 @@ int getCategory(char ch)
 }
 
 
-void getError(int current_line, int state, char ch)
+void Scanner::getError(int current_line, int state, char ch)
 {
 	cout << "[ERROR] at (" << current_line << ":" << current_scanner_pointer << ") -> {" << ch << "]: ";
 	if(state == ERROR_INT) {
@@ -46,9 +42,7 @@ void getError(int current_line, int state, char ch)
 }
 
 
-bool isCommenting = false;
-string lastCommentPosition = "merp";
-char checkComment(int current_line, char ch)
+char Scanner::checkComment(int current_line, char ch)
 {
 	if(ch == COMMENT_DELIMITER) {
 		isCommenting = (isCommenting == true) ? false : true;
@@ -70,8 +64,15 @@ char checkComment(int current_line, char ch)
 }
 
 
-unsigned int current_scanner_pointer = 0;
-int scan(int current_line, string &input, Token &tk)
+void Scanner::isCommentMode()
+{
+	if(isCommenting) {
+		cout << "[WARNING] at (" << lastCommentPosition << ") -> comment tag never close" << endl;
+	}
+}
+
+
+int Scanner::scan(int current_line, string &input, Token &tk)
 {
 	//Set current line number for the current token
 	tk.line_number = current_line;
@@ -159,21 +160,7 @@ int scan(int current_line, string &input, Token &tk)
 	}
 
 	//When scanner pointer is looking at the end of the input, end scanner.
-	resetScannerPointer();
-	return -1;
-}
-
-
-void resetScannerPointer()
-{
 	current_scanner_pointer = 0;
-}
-
-
-void isCommentMode()
-{
-	if(isCommenting) {
-		cout << "[WARNING] at (" << lastCommentPosition << ") -> comment tag never close, was this on purpose?" << endl;
-	}
+	return -1;
 }
 

@@ -2,11 +2,11 @@
 # Author: Duc Ngo
 # Course: CS4280-002 - Program Translation Techniques
 # File Name: main.cpp
-# Date: 2/10/20
+# Date: 3/8/20
 # Purpose:
-	Programming refreshment, practice with standards and header files, practice with trees, 
-	traversals, command line arguments, and file IO. Write a program to build a tree and print it 
-	using different traversals. 
+	We will be implementing a scanner for the provided lexical definitions. 
+	The scanner is embedded and thus it will return one token every time it is called. 
+	Since the parser is not available yet, we will use a tester program to call the scanner. 
 ==================================================================================================== */
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 			{
 				cout << endl << ">>: ";
 				getline(cin, user_input);
-				temp_file << user_input << " ";
+				temp_file << user_input << endl;
 			}
 			while(!user_input.empty());	
 
@@ -85,11 +85,9 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	/* Invoking Scanner */
-	//ofstream output_file;
+	/* Invoking Test Program */
 	testScanner(file_name);
 
-	//output_file.close();
 	return 0;
 }
 
