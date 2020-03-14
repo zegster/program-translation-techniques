@@ -7,14 +7,18 @@
 #include "token.h"
 #include "scanner.h"
 #include "testScanner.h"
-#include <unistd.h>
 
+
+/* ====================================================================================================
+* Function    :  testScanner()
+* Definition  :  a simple function to test out the scanner.
+* Parameter   :  an input file_name (string)
+* Return      :  status code where error will return -1.
+==================================================================================================== */
 int testScanner(string file_name)
 {
 	//Init Scanner Object
 	Scanner scanner;
-	scanner.initOperatorMap();
-	scanner.initKeywordMap();
 	
 	//Check if the file is open and associated with the stream object
 	ifstream file(file_name.c_str());
@@ -30,6 +34,7 @@ int testScanner(string file_name)
 			current_line++;  //Increment the currnet line in the file when finish reading the current input
 		}
 		
+		//Check for any open comment tag
 		scanner.isCommentMode();
 	}
 	else {
@@ -51,10 +56,8 @@ int testScanner(string file_name)
 		scanner.tokenToString(token);
 	}
 
+	//Close the reading file
 	file.close();
 	return 0;
 }
-
-
-
 

@@ -6,7 +6,12 @@
 ==================================================================================================== */
 #include "token.h"
 
-
+/* ====================================================================================================
+* Function    :  initOperatorMap()
+* Definition  :  populate the operator map with the choosen lexical.
+* Parameter   :  none.
+* Return      :  none.
+==================================================================================================== */
 void Language::initOperatorMap()
 {
 	operator_map.insert(make_pair(":=", "colonEqualTk"));
@@ -32,6 +37,12 @@ void Language::initOperatorMap()
 }
 
 
+/* ====================================================================================================
+* Function    :  initKeywordMap()
+* Definition  :  populate the keyword map with the choosen lexical.
+* Parameter   :  none. 
+* Return      :  none.
+==================================================================================================== */
 void Language::initKeywordMap()
 {
 	keyword_map.insert(make_pair("label", "labelTk"));
@@ -50,12 +61,26 @@ void Language::initKeywordMap()
 }
 
 
+/* ====================================================================================================
+* Function    :  printToken()
+* Definition  :  display the line number of the token, followed by the category of the token (Identifier, 
+                  Integer, Operator, etc), followed by the specific token name (IDtk, THENtk, etc), 
+                  followed by the token description (value of the token).
+* Parameter   :  struct Token.
+* Return      :  none.
+==================================================================================================== */
 void Language::tokenToString(Token tk)
 {
 	cout << "Line #" << tk.line_number << ": " << token_names[tk.id] << " | " << tk.value << endl; 
 }
 
 
+/* ====================================================================================================
+* Function    :  isOperator()
+* Definition  :  return true (1) or false (-1) if the input char is an operator.
+* Parameter   :  char. 
+* Return      :  true or false (int)
+==================================================================================================== */
 int Language::isOperator(char ch)
 {
 	//Return 1 when input character is an operator
@@ -70,6 +95,12 @@ int Language::isOperator(char ch)
 }
 
 
+/* ====================================================================================================
+* Function    :  isNonSingleOperator()()
+* Definition  :  return true (1) or false (-1) if the input char is a non-single operator.
+* Parameter   :  string.
+* Return      :  true or false (int)
+==================================================================================================== */
 int Language::isNonSingleOperator(string str)
 {
 	//Return 1 when input string is a non-single operator
@@ -84,9 +115,14 @@ int Language::isNonSingleOperator(string str)
 }
 
 
+/* ====================================================================================================
+* Function    :  getOperator()
+* Definition  :  return single or non-single operator key (assuming it already been verify it's an operator).
+* Parameter   :  struct token.
+* Return      :  operator key (int).
+==================================================================================================== */
 int Language::getOperator(Token &tk)
 {
-	//Return operator key when input token is an operator
 	//Check single character operator
 	for(unsigned int i = 0; i < operators.size(); i++) {
 		string op(1, operators[i]);
@@ -109,6 +145,12 @@ int Language::getOperator(Token &tk)
 }
 
 
+/* ====================================================================================================
+* Function    :  getKeyword()
+* Definition  :  return keyword key if it's a keyword.
+* Parameter   :  struct token.
+* Return      :  keyword key (int).
+==================================================================================================== */
 int Language::getKeyword(Token &tk)
 {
 	//Return keyword key when input token is a keyword

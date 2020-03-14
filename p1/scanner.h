@@ -63,12 +63,14 @@ class Scanner: public Language
 		//Scanner Delimiter
 		const char SCANNER_DELIMITER = ' ';
 
-	public:
 		int getCategory(char ch);
 		void getError(int current_line, int state, char ch);
 		char checkComment(int current_line, char ch);
-		void isCommentMode();
+
+	public:
+		Scanner();
 		int scan(int current_line, string &input, Token &tk);
+		void isCommentMode();
 };
 #endif
 

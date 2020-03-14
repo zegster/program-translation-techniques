@@ -57,14 +57,15 @@ class Language
 			":=", "=="
 		};
 	
-	public:
 		void initOperatorMap();
 		void initKeywordMap();
-		void tokenToString(Token tk);
 		int isOperator(char ch);
 		int isNonSingleOperator(string str);
 		int getOperator(Token &tk);
 		int getKeyword(Token &tk);
+
+	public:
+		void tokenToString(Token tk);
 };
 #endif
 

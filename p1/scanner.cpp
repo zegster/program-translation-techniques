@@ -6,7 +6,25 @@
 ==================================================================================================== */
 #include "scanner.h"
 
+/* ====================================================================================================
+* Function    :  Scanner()
+* Definition  :  invoke initOperatorMap() and initKeywordMap() when this object is create.
+* Parameter   :  none.
+* Return      :  none.
+==================================================================================================== */
+Scanner::Scanner()
+{
+	initOperatorMap();
+	initKeywordMap();
+}
 
+
+/* ====================================================================================================
+* Function    :  getCategory()
+* Definition  :  return the category column number when a match is found.
+* Parameter   :  char.
+* Return      :  none.
+==================================================================================================== */
 int Scanner::getCategory(char ch)
 {
 	//Refer to FSA_TABLE in scanner.h
@@ -28,6 +46,12 @@ int Scanner::getCategory(char ch)
 }
 
 
+/* ====================================================================================================
+* Function    :  getError()
+* Definition  :  print the appropriate error message base on the error stage.
+* Parameter   :  file line number (int) and the error state (int).
+* Return      :  none.
+==================================================================================================== */
 void Scanner::getError(int current_line, int state, char ch)
 {
 	cout << "[ERROR] at (" << current_line << ":" << current_scanner_pointer << ") -> {" << ch << "]: ";
@@ -42,6 +66,13 @@ void Scanner::getError(int current_line, int state, char ch)
 }
 
 
+/* ====================================================================================================
+* Function    :  checkComment()
+* Definition  :  check for comment delimiter and ignore all the input if found one. Once an ending tag
+                  is found, restore scanner back to normal operation.
+* Parameter   :  file line number (int) and input character (char)
+* Return      :  none.
+==================================================================================================== */
 char Scanner::checkComment(int current_line, char ch)
 {
 	if(ch == COMMENT_DELIMITER) {
@@ -64,6 +95,12 @@ char Scanner::checkComment(int current_line, char ch)
 }
 
 
+/* ====================================================================================================
+* Function    :  isCommentMode()
+* Definition  :  check if comment tag still open, if it, then display a warning message.
+* Parameter   :  none.
+* Return      :  none.
+==================================================================================================== */
 void Scanner::isCommentMode()
 {
 	if(isCommenting) {
@@ -72,6 +109,13 @@ void Scanner::isCommentMode()
 }
 
 
+/* ====================================================================================================
+* Function    :  scan()
+* Definition  :  main function that identify the token using the state transition table, and if the 
+                  table does not return an error state.
+* Parameter   :  file line number (int), input (string), and token holder (struct Token). 
+* Return      :  return negative number if error.
+==================================================================================================== */
 int Scanner::scan(int current_line, string &input, Token &tk)
 {
 	//Set current line number for the current token
@@ -143,6 +187,7 @@ int Scanner::scan(int current_line, string &input, Token &tk)
 					break;
 			}
 
+			//Increment scanner pointer when open comment tag is found
 			if(isCommenting) {
 				current_scanner_pointer++;
 			}
@@ -153,7 +198,7 @@ int Scanner::scan(int current_line, string &input, Token &tk)
 		current_state = next_state;
 		current_scanner_pointer++;
 
-		//If not white space flager, update reading value of the token
+		//If not white space, update reading value of the token
 		if(!isspace(next_char)) {
 			read_value.push_back(next_char);
 		}
