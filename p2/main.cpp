@@ -9,12 +9,13 @@
 	issue error; however, if there is the empty production then instead of error you use the 
 	production - return from the function. 
 ==================================================================================================== */
+#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
+#include <cstring>       //Defines several functions to manipulate C strings and arrays.
+#include <fstream>       //Input and output stream class to operate on files.
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
-#include <cstring>       //Defines several functions to manipulate C strings and arrays.
-#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
-#include <fstream>       //Input and output stream class to operate on files.
 #include "testScanner.h"
+#include "parser.h"
 using namespace std;
 
 
@@ -87,7 +88,9 @@ int main(int argc, char *argv[])
 	}
 
 	/* Invoking Test Program */
-	testScanner(file_name);
+	//testScanner(file_name);
+	Parser parser(file_name);
+	parser.parse();
 
 	return 0;
 }

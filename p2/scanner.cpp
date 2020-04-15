@@ -54,7 +54,7 @@ int Scanner::getCategory(char ch)
 ==================================================================================================== */
 void Scanner::getError(int state, char ch)
 {
-	cout << "[ERROR] at (" << current_line_number << ":" << current_scanner_pointer << ") -> {" << ch << "]: ";
+	cout << "[ERROR] at " << getScannerPosition() << " -> {" << ch << "]: ";
 	if(state == ERROR_INT) {
 		cout << "all integer token must contain only digits." << endl;
 		cout << "[ERROR] code: " << ERROR_INT << endl;
@@ -76,22 +76,36 @@ void Scanner::getError(int state, char ch)
 char Scanner::checkComment(char ch)
 {
 	if(ch == COMMENT_DELIMITER) {
-		isCommenting = !isCommenting;
+		is_commenting = !is_commenting;
 		
-		if(isCommenting) {
+		if(is_commenting) {
 			ostringstream temp;
 			temp << current_line_number << ":" << current_scanner_pointer;
-			lastCommentPosition = temp.str();
+			last_comment_position = temp.str();
 		}
 		return SCANNER_DELIMITER;
 	}
 
-	if(isCommenting) {
+	if(is_commenting) {
 		return SCANNER_DELIMITER;
 	}
 	else {
 		return ch;
 	}
+}
+
+
+/* ====================================================================================================
+* Function    :  getScannerPosition()
+* Definition  :  get the scanner current line and cursor position.
+* Parameter   :  none.
+* Return      :  the scanner current position message.
+==================================================================================================== */
+string Scanner::getScannerPosition()
+{
+	ostringstream temp;
+	temp << "(" << current_line_number << ":" << current_scanner_pointer << ")";
+	return temp.str();
 }
 
 
@@ -103,8 +117,8 @@ char Scanner::checkComment(char ch)
 ==================================================================================================== */
 void Scanner::isCommentMode()
 {
-	if(isCommenting) {
-		cout << "[WARNING] at (" << lastCommentPosition << ") -> comment tag never close" << endl;
+	if(is_commenting) {
+		cout << "[WARNING] at (" << last_comment_position << ") -> comment tag never close" << endl;
 	}
 }
 
@@ -203,7 +217,7 @@ int Scanner::scan(string &input, Token &tk)
 			}
 
 			//Increment scanner pointer when open comment tag is found
-			if(isCommenting) {
+			if(is_commenting) {
 				current_scanner_pointer++;
 			}
 			return 0;

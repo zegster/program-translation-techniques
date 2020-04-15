@@ -7,8 +7,8 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 #include <iostream>      //For cout and cin; input and output.
-#include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <map>           //Dictionary like data structure.
+#include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 using namespace std;
 

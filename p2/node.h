@@ -6,8 +6,8 @@
 ==================================================================================================== */
 #ifndef NODE_H
 #define NODE_H
-#include <string>      //Introduces string types, character traits and a set of converting functions.
-#include <vector>      //Vectors are sequence containers representing arrays that can change in size.
+#include <string>        //Introduces string types, character traits and a set of converting functions.
+#include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 #include "token.h"
 using namespace std;
 

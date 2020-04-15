@@ -6,13 +6,13 @@
 ==================================================================================================== */
 #ifndef SCANNER_H
 #define SCANNER_H
-#include <iostream>      //For cout and cin; input and output.
-#include <string>        //Introduces string types, character traits and a set of converting functions.
-#include <cstring>       //Defines several functions to manipulate C strings and arrays.
 #include <cctype>        //Classify and transform individual characters.
+#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
 #include <cstdlib>       //Defines several general purpose functions.
+#include <cstring>       //Defines several functions to manipulate C strings and arrays.
+#include <iostream>      //For cout and cin; input and output.
 #include <sstream>       //Header providing string stream classes.
-#include <cstdio>        //Composes a string with the same text that would be printed.
+#include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <vector>        //Vectors are sequence containers representing arrays that can change in size.
 #include "token.h"
 using namespace std;
@@ -22,10 +22,10 @@ class Scanner: public Language
 {
 	private:
 		//Scanner Tracker
-		unsigned int current_scanner_pointer = -1;  //Keep track when the scanner is finish scanning the current input. Must init to 0.
+		unsigned int current_scanner_pointer = 0;   //Keep track when the scanner is finish scanning the current input. Must init to 0.
 		unsigned int current_line_number = 1;       //Keep track of the current line number.
-		bool isCommenting = false;                  //Keep track when the scanner encounter a comment.
-		string lastCommentPosition = "";            //Keep track the last known open comment tag.
+		bool is_commenting = false;                 //Keep track when the scanner encounter a comment.
+		string last_comment_position = "";          //Keep track the last known open comment tag.
 
 		//All possible states in the FSA table
 		enum {
@@ -72,6 +72,7 @@ class Scanner: public Language
 	public:
 		Scanner();
 		int scan(string &input, Token &tk);
+		string getScannerPosition();
 		void isCommentMode();
 		void invokeEOF(Token &tk);
 };

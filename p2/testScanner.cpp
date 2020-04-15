@@ -19,25 +19,18 @@ int testScanner(string file_name)
 {
 	//Init Scanner Object
 	Scanner scanner;
-	Parser parser;	
 
 	//Check if the file is open and associated with the stream object
 	ifstream file(file_name.c_str());
-	//unsigned int current_line = 1;  //Keep track of the current line number of the file
 	Token token;                    //Token holder for displaying purpose (can be useful later in the future...)
 	if(file.is_open()) {
 		string input;
 		while(getline(file, input)) {
-
 			//Invoke scanner() until each token in the current line has been identified
 			while(scanner.scan(input, token) == 0) {
 				scanner.tokenToString(token);
 			}
-			//current_line++;  //Increment the currnet line in the file when finish reading the current input
 		}
-		
-		//Check for any open comment tag
-		scanner.isCommentMode();
 	}
 	else {
 		cout << "[ERROR] Can't open file!" << endl;
@@ -46,6 +39,9 @@ int testScanner(string file_name)
 
 	//Once all lines of the files has been traverse, return EOF token
 	if(file.eof()) {
+		//Check for any open comment tag
+		scanner.isCommentMode();
+
 		scanner.invokeEOF(token);
 		scanner.tokenToString(token);
 	}

@@ -6,11 +6,12 @@
 ==================================================================================================== */
 #ifndef PARSER_H
 #define PARSER_H
+#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
+#include <cstdlib>       //Defines several general purpose functions.
+#include <cstring>       //Defines several functions to manipulate C strings and arrays.
+#include <fstream>       //Input and output stream class to operate on files.
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
-#include <cstring>       //Defines several functions to manipulate C strings and arrays.
-#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
-#include <fstream>       //Input and output stream class to operate on files.
 #include "node.h"
 #include "scanner.h"
 using namespace std;
@@ -19,8 +20,12 @@ using namespace std;
 class Parser: public Scanner
 {
 	private:
+		ifstream file;
+		string file_input;
 		Token tk;
-//		Scanner scanner;
+		string expected_token;
+		Scanner scanner;
+		int scanner_status_code;
 
 		//BNF of the program
 		NodeT *program();
@@ -44,12 +49,12 @@ class Parser: public Scanner
 		NodeT *RO();
 
 		//Parser Function
-		NodeT *createNode(string);
+		void nextParse();
+		NodeT *createNode(string production_name);
 		void parserError();
 
 	public:
-		Scanner scanner;
-		Parser();
+		Parser(string file_name);
 		NodeT *parse();
 };
 #endif
