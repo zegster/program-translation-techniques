@@ -10,10 +10,11 @@
 #include <fstream>       //Input and output stream class to operate on files.
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
+#include "node.h"
 using namespace std;
 
-void printToken(int level, set<string> token);
-void traversePreorder(NodeT *root);
+void printToken(NodeT *node, int level);
+void traversePreorder(NodeT *node, int level);
 
 #endif
 

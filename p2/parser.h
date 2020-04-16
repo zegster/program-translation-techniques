@@ -20,12 +20,15 @@ using namespace std;
 class Parser: public Scanner
 {
 	private:
-		ifstream file;
-		string file_input;
-		Token tk;
-		string expected_token;
-		Scanner scanner;
-		int scanner_status_code;
+		ifstream file;            //File pointer
+		string file_input;        //Keep track of the current line input of the file
+
+		Token tk;                 //Token holder
+		Token EMPTY_TK;           //Empty token holder
+		string expected_token;    //Keep track of what token is expected when there is an error
+
+		Scanner scanner;          //Scanner object
+		int scanner_status_code;  //Keep track of the scanner status wheter to grab a new line or use old line
 
 		//BNF of the program
 		NodeT *program();
@@ -49,7 +52,7 @@ class Parser: public Scanner
 		NodeT *RO();
 
 		//Parser Function
-		void nextParse();
+		void nextScan();
 		NodeT *createNode(string production_name);
 		void parserError();
 

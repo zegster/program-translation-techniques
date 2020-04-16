@@ -173,7 +173,7 @@ int Scanner::scan(string &input, Token &tk)
 		//Check to see if this were an error state. Return -1 if it is.
 		if(next_state < 0) {
 			getError(next_state, next_char);
-			//exit(EXIT_FAILURE);  //Uncomment this if you want the scanner to stop scanning when encounting error
+			exit(EXIT_FAILURE);  //Uncomment this if you want the scanner to stop scanning when encounting error
 		}
 		//Check to see if this were the final state. Return 0 if it is.
 		else if(next_state > STATE_F) {

@@ -16,6 +16,7 @@
 #include <string>        //Introduces string types, character traits and a set of converting functions.
 #include "testScanner.h"
 #include "parser.h"
+#include "testTree.h"
 using namespace std;
 
 
@@ -90,8 +91,9 @@ int main(int argc, char *argv[])
 	/* Invoking Test Program */
 	//testScanner(file_name);
 	Parser parser(file_name);
-	parser.parse();
-
+	NodeT *root = parser.parse();
+	traversePreorder(root, root->level);
+	
 	return 0;
 }
 
