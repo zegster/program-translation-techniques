@@ -370,7 +370,14 @@ NodeT *Parser::stat()
 			node->c1 = in();
 
 			//Check if token is [semiColonTk]
-			return node;
+			if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+				nextScan();
+				return node;
+			} else {
+				expected_token.assign("semiColonTk");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
 		}
 		//Check if token is [outTk]
 		else if(keyword_map[tk.value] == "outTk") {
@@ -379,7 +386,14 @@ NodeT *Parser::stat()
 			node->c1 = out();
 
 			//Check if token is [semiColonTk]
-			return node;
+			if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+				nextScan();
+				return node;
+			} else {
+				expected_token.assign("semiColonTk");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
 		}
 		//Check if token is [iffyTk]
 		else if(keyword_map[tk.value] == "iffyTk") {
@@ -388,6 +402,14 @@ NodeT *Parser::stat()
 			node->c1 = iffy();
 
 			//Check if token is [semiColonTk]
+			if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+				nextScan();
+				return node;
+			} else {
+				expected_token.assign("semiColonTk");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
 			return node;
 		}
 		//Check if token is [loopTk]
@@ -397,6 +419,14 @@ NodeT *Parser::stat()
 			node->c1 = loop();
 
 			//Check if token is [semiColonTk]
+			if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+				nextScan();
+				return node;
+			} else {
+				expected_token.assign("semiColonTk");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
 			return node;
 		}
 		//Check if token is [labelTk]
@@ -406,6 +436,14 @@ NodeT *Parser::stat()
 			node->c1 = label();
 
 			//Check if token is [semiColonTk]
+			if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+				nextScan();
+				return node;
+			} else {
+				expected_token.assign("semiColonTk");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
 			return node;
 		}
 		//Check if token is [gotoTk]
@@ -415,6 +453,14 @@ NodeT *Parser::stat()
 			node->c1 = goTo();
 
 			//Check if token is [semiColonTk]
+			if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+				nextScan();
+				return node;
+			} else {
+				expected_token.assign("semiColonTk");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
 			return node;
 		} else {
 			expected_token.assign("in or out or iffy or loop or label or goto or identifier");
@@ -433,9 +479,8 @@ NodeT *Parser::stat()
 		node->c1->tokens.push_back(temp_tk);
 		return node;
 	} else {
-		expected_token.assign("in or out or iffy or loop or label or goto or identifier");
-		parserError();
-		exit(EXIT_FAILURE);
+		node->c1 = block();
+		return node;
 	}
 }
 
@@ -474,7 +519,6 @@ NodeT *Parser::out()
 {
 	//Create the node <out>
 	NodeT *node = createNode("<out>");
-	nextScan();
 
 	node->c1 = expr();
 	return node;
@@ -620,7 +664,10 @@ void Parser::nextScan()
 		}
 	
 		scanner_status_code = scanner.scan(file_input, tk);
-		scanner.tokenToString(tk);  //DEBUG only
+
+		if(scanner_status_code != -1) {
+			scanner.tokenToString(tk);  //DEBUG only
+		}
 	} while(scanner_status_code == -1);
 }
 
