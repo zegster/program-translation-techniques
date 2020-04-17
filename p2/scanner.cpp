@@ -138,6 +138,43 @@ void Scanner::invokeEOF(Token &tk)
 }
 
 
+void Scanner::filterScan(string input_file_name, string output_file_name)
+{
+	ifstream source_file(input_file_name.c_str());
+	ofstream output_file(output_file_name.c_str());
+	Token token;
+
+	//Check if the file is open and associated with the stream object
+	if(source_file.is_open()) {
+		string input;
+		while(getline(source_file, input)) {
+			
+			string scan_input;
+			while(scan(input, token) == 0) {
+				scan_input.append(token.data);
+
+				if(current_scanner_pointer < input.length()) {
+					scan_input.append(" ");
+				}
+			}
+
+			//NOTE: can surround this to eliminate blank line if need to
+			output_file << scan_input << endl;
+		}
+	}
+	else {
+		cout << "[ERROR] Can't open file!" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	//Clean up and reset cursor and line position to default
+	source_file.close();
+	output_file.close();
+	current_scanner_pointer = 0;
+	current_line_number = 1;
+}
+
+
 /* ====================================================================================================
 * Function    :  scan()
 * Definition  :  main function that identify the token using the state transition table, and if the 
@@ -185,16 +222,19 @@ int Scanner::scan(string &input, Token &tk)
 				case STATE_ID: //Identfier
 					if(getKeyword(tk) != -1) { //Keyword?
 						tk.id = keywordTk;
+						tk.data.assign(read_value);
 						tk.value.assign(read_value);
 					}
 					else {
 						tk.id = idTk;
+						tk.data.assign(read_value);
 						tk.value.assign("idTk " + read_value);
 					}
 					break;
 
 				case STATE_INT: //Integer
 					tk.id = intTk;
+					tk.data.assign(read_value);
 					tk.value.assign("intTk " + read_value);
 					break;
 
@@ -210,8 +250,11 @@ int Scanner::scan(string &input, Token &tk)
 						}
 					}
 
+					tk.data.assign(read_value);
 					tk.value.assign(read_value);
+
 					getOperator(tk);
+					tk.data.assign(read_value);
 					tk.value.assign(read_value);
 					break;
 			}

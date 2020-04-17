@@ -15,7 +15,10 @@
 Parser::Parser(string file_name)
 {
 	//Check if the file is open and associated with the stream object
-	file.open(file_name.c_str());
+	string output_file_name = "filter-parser-temp.dat";
+	scanner.filterScan(file_name, output_file_name);
+
+	file.open(output_file_name.c_str());
 	if(!file.is_open()) {
 		cout << "[ERROR] Can't open file!" << endl;
 		exit(EXIT_FAILURE);	

@@ -10,6 +10,7 @@
 #include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
 #include <cstdlib>       //Defines several general purpose functions.
 #include <cstring>       //Defines several functions to manipulate C strings and arrays.
+#include <fstream>       //Input and output stream class to operate on files.
 #include <iostream>      //For cout and cin; input and output.
 #include <sstream>       //Header providing string stream classes.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
@@ -71,6 +72,7 @@ class Scanner: public Language
 
 	public:
 		Scanner();
+		void filterScan(string input_file_name, string output_file_name);
 		int scan(string &input, Token &tk);
 		string getScannerPosition();
 		void isCommentMode();

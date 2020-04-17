@@ -20,7 +20,7 @@ void printToken(NodeT *node, int level)
 	line.append("|");
 	for(int i = 0; i < level; i++)
 	{
-		line.append("____");
+		line.append("__");
 	}
 
 	//Label production
