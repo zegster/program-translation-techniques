@@ -102,7 +102,7 @@ We will be implementing a scanner for the provided lexical definitions. The scan
 ##
 
 #### HOW TO RUN
-1. In your command promt, type: make
+1. In your command prompt, type: make
 2. This will generate .o file and executable file
 3. To use the program, type: ./scanner [file] (or the name of your a.out)
 

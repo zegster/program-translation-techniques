@@ -162,7 +162,7 @@ static void printPreorder(nodeType *rootP,int level)
 
 --------------------------------------------------------------------------------
 ##### HOW TO RUN:
-1. In your command promt, type: make
+1. In your command prompt, type: make
 2. This will generate .o file and executable file
 3. To use the program, type: ./main (or the name of your a.out)
 4. You build a tree and print it using different traversals.
