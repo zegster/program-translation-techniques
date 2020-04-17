@@ -68,12 +68,12 @@ NodeT *Parser::block()
 			nextScan();
 			return node;
 		} else {
-			expected_token.assign("rightCurlyTk");
+			expected_token.assign("}");
 			parserError();
 			exit(EXIT_FAILURE);
 		}
 	} else {
-		expected_token.assign("leftCurlyTk");
+		expected_token.assign("{");
 		parserError();
 		exit(EXIT_FAILURE);
 	}
@@ -116,22 +116,22 @@ NodeT *Parser::vars()
 						node->c1 = vars();
 						return node;
 					} else {
-						expected_token.assign("semiColonTk");
+						expected_token.assign(";");
 						parserError();
 						exit(EXIT_FAILURE);
 					}
 				} else {
-					expected_token.assign("intTk");
+					expected_token.assign("Integer");
 					parserError();
 					exit(EXIT_FAILURE);
 				}
 			} else {
-				expected_token.assign("colonEqualTk");
+				expected_token.assign(":=");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
 		} else {
-			expected_token.assign("idTk");
+			expected_token.assign("Identifier");
 			parserError();
 			exit(EXIT_FAILURE);
 		}
@@ -274,7 +274,7 @@ NodeT *Parser::R()
 			nextScan();
 			return node;
 		} else {
-			expected_token.assign("rightParenTk");
+			expected_token.assign(")");
 			parserError();
 			exit(EXIT_FAILURE);
 		}
@@ -292,7 +292,7 @@ NodeT *Parser::R()
 		return node;
 	}
 	else {
-		expected_token.assign("leftParenTk or idkTk or intTk");
+		expected_token.assign("( or Identifier or Integer");
 		parserError();
 		exit(EXIT_FAILURE);
 	}
@@ -374,7 +374,7 @@ NodeT *Parser::stat()
 				nextScan();
 				return node;
 			} else {
-				expected_token.assign("semiColonTk");
+				expected_token.assign(";");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
@@ -390,7 +390,7 @@ NodeT *Parser::stat()
 				nextScan();
 				return node;
 			} else {
-				expected_token.assign("semiColonTk");
+				expected_token.assign(";");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
@@ -406,7 +406,7 @@ NodeT *Parser::stat()
 				nextScan();
 				return node;
 			} else {
-				expected_token.assign("semiColonTk");
+				expected_token.assign(";");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
@@ -423,7 +423,7 @@ NodeT *Parser::stat()
 				nextScan();
 				return node;
 			} else {
-				expected_token.assign("semiColonTk");
+				expected_token.assign(";");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
@@ -440,7 +440,7 @@ NodeT *Parser::stat()
 				nextScan();
 				return node;
 			} else {
-				expected_token.assign("semiColonTk");
+				expected_token.assign(";");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
@@ -457,13 +457,13 @@ NodeT *Parser::stat()
 				nextScan();
 				return node;
 			} else {
-				expected_token.assign("semiColonTk");
+				expected_token.assign(";");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
 			return node;
 		} else {
-			expected_token.assign("in or out or iffy or loop or label or goto or identifier");
+			expected_token.assign("in or out or iffy or loop or label or goto or Identifier");
 			parserError();
 			exit(EXIT_FAILURE);
 		}
@@ -502,7 +502,7 @@ NodeT *Parser::in()
 		nextScan();
 		return node;
 	} else {
-		expected_token.assign("idTk");
+		expected_token.assign("Identifier");
 		parserError();
 		exit(EXIT_FAILURE);
 	}
@@ -555,20 +555,19 @@ NodeT *Parser::iffy()
 				node->c4 = stat();
 				return node;
 			} else {
-				expected_token.assign("thenTk");
+				expected_token.assign("then");
 				parserError();
 				exit(EXIT_FAILURE);
 			}
 		} else {
-			expected_token.assign("rightBracketTk");
+			expected_token.assign("]");
 			parserError();
 			exit(EXIT_FAILURE);
 		}
 	} else {
-		expected_token.assign("leftBracketTk");
+		expected_token.assign("[");
 		parserError();
 		exit(EXIT_FAILURE);
-		
 	}
 }
 
@@ -583,7 +582,31 @@ NodeT *Parser::loop()
 {
 	//Create the node <loop>
 	NodeT *node = createNode("<loop>");
-	return node;
+
+	//Check if token is [leftBracketTk]
+	if((tk.id == opTk) && (operator_map[tk.value] == "leftBracketTk")) {
+		nextScan();
+		
+		node->c1 = expr();
+		node->c2 = RO();
+		node->c3 = expr();
+		
+		//Check if token is [rightBracketTk]
+		if((tk.id == opTk) && (operator_map[tk.value] == "rightBracketTk")) {
+			nextScan();
+
+			node->c4 = stat();
+			return node;
+		} else {
+			expected_token.assign("]");
+			parserError();
+			exit(EXIT_FAILURE);
+		}
+	} else {
+		expected_token.assign("[");
+		parserError();
+		exit(EXIT_FAILURE);
+	}
 }
 
 
@@ -597,7 +620,18 @@ NodeT *Parser::assign()
 {
 	//Create the node <assign>
 	NodeT *node = createNode("<assign>");
-	return node;
+
+	//Check if token is [colonEqualTk]
+	if((tk.id == opTk) && (operator_map[tk.value] == "colonEqualTk")) {
+		nextScan();
+
+		node->c1 = expr();
+		return node;
+	} else {
+		expected_token.assign(":=");
+		parserError();
+		exit(EXIT_FAILURE);
+	}
 }
 
 
@@ -611,7 +645,17 @@ NodeT *Parser::label()
 {
 	//Create the node <label>
 	NodeT *node = createNode("<label>");
-	return node;
+
+	//Check if token is [idTk]
+	if(tk.id == idTk) {
+		node->tokens.push_back(tk);
+		nextScan();
+		return node;
+	} else {
+		expected_token.assign("Identifier");
+		parserError();
+		exit(EXIT_FAILURE);
+	}
 }
 
 
@@ -625,7 +669,17 @@ NodeT *Parser::goTo()
 {
 	//Create the node <goTo>
 	NodeT *node = createNode("<goTo>");
-	return node;
+
+	//Check if token is [idTk]
+	if(tk.id == idTk) {
+		node->tokens.push_back(tk);
+		nextScan();
+		return node;
+	} else {
+		expected_token.assign("Identifier");
+		parserError();
+		exit(EXIT_FAILURE);
+	}
 }
 
 
@@ -639,7 +693,72 @@ NodeT *Parser::RO()
 {
 	//Create the node <RO>
 	NodeT *node = createNode("<RO>");
-	return node;
+
+	//Check if token is [opTk]
+	if(tk.id == opTk) {
+		/* CHECK: < | < < | < > */
+		//Check if token is [lessThanTk]
+		if((tk.id == opTk) && (operator_map[tk.value] == "lessThanTk")) {
+			node->tokens.push_back(tk);
+			nextScan();		
+
+			if((tk.id == opTk) && (operator_map[tk.value] == "lessThanTk")) {
+				node->tokens.push_back(tk);
+				nextScan();
+				return node;
+			}
+			else if((tk.id == opTk) && (operator_map[tk.value] == "greaterThanTk")) {
+				node->tokens.push_back(tk);
+				nextScan();
+				return node;
+			}
+			else if((tk.id == opTk) && ((operator_map[tk.value] != "lessThanTk") || (operator_map[tk.value] != "greaterThanTk"))) {
+				expected_token.assign("< or << or <>");
+				parserError();
+				exit(EXIT_FAILURE);
+			} 
+			else {
+				return node;
+			}
+		}
+		/* CHECK: > | > > */
+		//Check if token is [greaterThanTk]
+		else if((tk.id == opTk) && (operator_map[tk.value] == "greaterThanTk")) {
+			node->tokens.push_back(tk);
+			nextScan();		
+
+			if((tk.id == opTk) && (operator_map[tk.value] == "greaterThanTk")) {
+				node->tokens.push_back(tk);
+				nextScan();
+				return node;
+			}
+			else if((tk.id == opTk) && (operator_map[tk.value] != "greaterThanTk")) {
+				expected_token.assign("< or << or <>");
+				parserError();
+				exit(EXIT_FAILURE);
+			}
+			else {
+				return node;
+			}
+		}
+		/* CHECK: == */
+		//Check if token is [equalEqualTk]
+		else if((tk.id == opTk) && (operator_map[tk.value] == "equalEqualTk")) {
+			node->tokens.push_back(tk);
+			nextScan();	
+			return node;
+		}
+		//Anything that is not valid... 
+		else {
+			expected_token.assign("< or << or > or >> or == or <>");
+			parserError();
+			exit(EXIT_FAILURE);
+		}
+	} else {
+		expected_token.assign("< or << or > or >> or == or <>");
+		parserError();
+		exit(EXIT_FAILURE);
+	}
 }
 
 
