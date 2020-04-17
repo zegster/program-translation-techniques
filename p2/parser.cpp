@@ -477,7 +477,16 @@ NodeT *Parser::stat()
 
 		node->c1 = assign();
 		node->c1->tokens.push_back(temp_tk);
-		return node;
+		
+		//Check if token is [semiColonTk]
+		if((tk.id == opTk) && (operator_map[tk.value] == "semiColonTk")) {
+			nextScan();
+			return node;
+		} else {
+			expected_token.assign("semiColonTk");
+			parserError();
+			exit(EXIT_FAILURE);
+		}
 	} else {
 		node->c1 = block();
 		return node;
@@ -548,7 +557,7 @@ NodeT *Parser::iffy()
 		if((tk.id == opTk) && (operator_map[tk.value] == "rightBracketTk")) {
 			nextScan();
 
-			//Check if token is [thenTK]
+			//Check if token is [thenTk]
 			if((tk.id == keywordTk) && (keyword_map[tk.value] == "thenTk")) {
 				nextScan();
 
