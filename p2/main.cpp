@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
 	//testScanner(file_name);
 	Parser parser(file_name);
 	NodeT *root = parser.parse();
-	traversePreorder(root, root->level);
+	traversePreorder(root, 0);
 	
 	return 0;
 }

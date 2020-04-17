@@ -73,13 +73,14 @@ NodeT *Parser::block()
 		} else {
 			expected_token.assign("}");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	} else {
 		expected_token.assign("{");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -121,27 +122,26 @@ NodeT *Parser::vars()
 					} else {
 						expected_token.assign(";");
 						parserError();
-						exit(EXIT_FAILURE);
 					}
 				} else {
 					expected_token.assign("Integer");
 					parserError();
-					exit(EXIT_FAILURE);
 				}
 			} else {
 				expected_token.assign(":=");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 		} else {
 			expected_token.assign("Identifier");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	} else {
 		node->tokens.push_back(EMPTY_TK);
 		return node;
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -279,7 +279,6 @@ NodeT *Parser::R()
 		} else {
 			expected_token.assign(")");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	}
 	//Check if token is [idTk]
@@ -297,8 +296,10 @@ NodeT *Parser::R()
 	else {
 		expected_token.assign("( or Identifier or Integer");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -334,13 +335,12 @@ NodeT *Parser::mStat()
 	//Check if token is [inTk], [outTk], [iffyTk], [loopTk], [labelTk], [gotoTk], [idTk] 
 	if( 
 		((tk.id == keywordTk) && ( 
-			(keyword_map[tk.value] == "inTk") ||
-			(keyword_map[tk.value] == "outTk") ||
-			(keyword_map[tk.value] == "iffyTk") ||
-			(keyword_map[tk.value] == "loopTk") ||
-			(keyword_map[tk.value] == "labelTk") ||
-			(keyword_map[tk.value] == "gotoTk")
-		)) || (tk.id == idTk)
+			(keyword_map[tk.value] == "inTk") || (keyword_map[tk.value] == "outTk") ||
+			(keyword_map[tk.value] == "iffyTk") || (keyword_map[tk.value] == "loopTk") ||
+			(keyword_map[tk.value] == "labelTk") || (keyword_map[tk.value] == "gotoTk")
+		)) || 
+		((tk.id == opTk) && (operator_map[tk.value] == "leftCurlyTk")) ||
+		(tk.id == idTk)
 	) {
 		node->c1 = stat();
 		node->c2 = mStat();
@@ -379,7 +379,6 @@ NodeT *Parser::stat()
 			} else {
 				expected_token.assign(";");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 		}
 		//Check if token is [outTk]
@@ -395,7 +394,6 @@ NodeT *Parser::stat()
 			} else {
 				expected_token.assign(";");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 		}
 		//Check if token is [iffyTk]
@@ -411,7 +409,6 @@ NodeT *Parser::stat()
 			} else {
 				expected_token.assign(";");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 			return node;
 		}
@@ -428,7 +425,6 @@ NodeT *Parser::stat()
 			} else {
 				expected_token.assign(";");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 			return node;
 		}
@@ -445,7 +441,6 @@ NodeT *Parser::stat()
 			} else {
 				expected_token.assign(";");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 			return node;
 		}
@@ -462,13 +457,11 @@ NodeT *Parser::stat()
 			} else {
 				expected_token.assign(";");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 			return node;
 		} else {
 			expected_token.assign("in or out or iffy or loop or label or goto or Identifier");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	}
 	//Check if token is [idTk]
@@ -488,12 +481,14 @@ NodeT *Parser::stat()
 		} else {
 			expected_token.assign("semiColonTk");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	} else {
 		node->c1 = block();
 		return node;
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -516,8 +511,10 @@ NodeT *Parser::in()
 	} else {
 		expected_token.assign("Identifier");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -569,18 +566,18 @@ NodeT *Parser::iffy()
 			} else {
 				expected_token.assign("then");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 		} else {
 			expected_token.assign("]");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	} else {
 		expected_token.assign("[");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -612,13 +609,14 @@ NodeT *Parser::loop()
 		} else {
 			expected_token.assign("]");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	} else {
 		expected_token.assign("[");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -642,8 +640,10 @@ NodeT *Parser::assign()
 	} else {
 		expected_token.assign(":=");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -666,8 +666,10 @@ NodeT *Parser::label()
 	} else {
 		expected_token.assign("Identifier");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -690,8 +692,10 @@ NodeT *Parser::goTo()
 	} else {
 		expected_token.assign("Identifier");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -727,7 +731,6 @@ NodeT *Parser::RO()
 			else if((tk.id == opTk) && ((operator_map[tk.value] != "lessThanTk") || (operator_map[tk.value] != "greaterThanTk"))) {
 				expected_token.assign("< or << or <>");
 				parserError();
-				exit(EXIT_FAILURE);
 			} 
 			else {
 				return node;
@@ -747,7 +750,6 @@ NodeT *Parser::RO()
 			else if((tk.id == opTk) && (operator_map[tk.value] != "greaterThanTk")) {
 				expected_token.assign("< or << or <>");
 				parserError();
-				exit(EXIT_FAILURE);
 			}
 			else {
 				return node;
@@ -764,13 +766,14 @@ NodeT *Parser::RO()
 		else {
 			expected_token.assign("< or << or > or >> or == or <>");
 			parserError();
-			exit(EXIT_FAILURE);
 		}
 	} else {
 		expected_token.assign("< or << or > or >> or == or <>");
 		parserError();
-		exit(EXIT_FAILURE);
 	}
+	
+	//An error has occur if code reach here
+	exit(EXIT_FAILURE);
 }
 
 
@@ -796,9 +799,10 @@ void Parser::nextScan()
 	
 		scanner_status_code = scanner.scan(file_input, tk);
 
+		/* DEBUG ONLY
 		if(scanner_status_code != -1) {
-			scanner.tokenToString(tk);  //DEBUG only
-		}
+			scanner.tokenToString(tk);
+		} */
 	} while(scanner_status_code == -1);
 }
 
@@ -832,6 +836,7 @@ void Parser::parserError()
 	cout << "[ERROR] parsing error at " << scanner.getScannerPosition() << " -> expected [" 
 		<< expected_token << "] but received [" << tk.value << "]" << endl;
 	file.close();
+	exit(EXIT_FAILURE);
 }
 
 
