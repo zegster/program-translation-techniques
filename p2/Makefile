@@ -2,7 +2,7 @@ CC         = g++
 CFLAGS     = -Wall -g -std=c++11
 
 MASTER_SRC = main.cpp
-SRC        = token.h scanner.h parser.h testScanner.h testTree.h
+SRC        = token.h scanner.h parser.h testTree.h
 AUX        = node.h
 
 MASTER_OBJ = $(MASTER_SRC:.cpp=.o)
