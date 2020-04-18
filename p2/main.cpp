@@ -90,8 +90,8 @@ int main(int argc, char *argv[])
 	/* Invoking Test Program */
 	Parser parser(file_name);
 	NodeT *root = parser.parse();
-	traversePreorder(root, 0);
-	
+	traversePreorder(root);
+
 	return 0;
 }
 

@@ -7,59 +7,58 @@
 #include "testTree.h"
 
 /* ====================================================================================================
-* Function    :  printToken()
-* Definition  :  Print the content of the current node to the terminal.
-* Parameter   :  level of the tree. 
+* Function    :  traversePreorder()
+* Definition  :  Preorder traversal of the BST.
+* Parameter   :  Root node of BST, node depth, prefix indentation, and whether this node is the last.
 * Return      :  none.
 ==================================================================================================== */
-void printToken(NodeT *node, int level)
-{
-	string line;
-
-	//Spacing
-	line.append("|");
-	for(int i = 0; i < level; i++)
-	{
-		line.append("__");
-	}
-
-	//Label production
-	line.append(node->label + " ");
-
-	//Append the tokens of a node to the output line
-	for(unsigned int i = 0; i < node->tokens.size(); i++) {
-		line.append(node->tokens[i].value);
-
-    	//Separate multiple tokens on a node by a comma
-    	if(((i + 1) != node->tokens.size()) && (node->tokens[i].id != opTk)) {
-      		line.append(",");
-		}
-		line.append(" ");
-	}
-
-	cout << line << endl;
-}
-
-
-/* ====================================================================================================
-* Function    :  ()
-* Definition  :  .
-* Parameter   :  .
-* Return      :  .
-==================================================================================================== */
-void traversePreorder(NodeT *node, int level)
+void traversePreorder(NodeT *node, int depth, string indent, bool last)
 {
 	if(node == NULL) {
 		return;
 	}
 
-	printToken(node, level);
-	traversePreorder(node->c1, level + 1);
-	traversePreorder(node->c2, level + 1);
-	traversePreorder(node->c3, level + 1);
-	traversePreorder(node->c4, level + 1);
+	//Indentation Symbol
+	string indent_symbol = "";
+	if(depth > 0) {
+		indent_symbol = (last) ? "└─ " : "├─ ";
+	} else {
+		indent_symbol = ">> ";
+	}
+	cout << indent << indent_symbol << node->label << " ";
+
+	//Label Production
+	for(unsigned int i = 0; i < node->tokens.size(); i++) {
+		cout << node->tokens[i].value;
+
+		//Separate multiple tokens on a node by a comma
+		if(((i + 1) != node->tokens.size()) && (node->tokens[i].id != opTk)) {
+			cout << ",";
+		}
+		cout << " ";
+	}
+	cout << endl;
+
+
+	//Setting up appropriate indent level
+	indent += (last) ? "   " : "│  ";
+	vector<NodeT *> nodes;
+	if(node->c1 != NULL) {
+		nodes.push_back(node->c1);
+	}
+	if(node->c2 != NULL) { 
+		nodes.push_back(node->c2);
+	}
+	if(node->c3 != NULL) {
+		nodes.push_back(node->c3);
+	}
+	if(node->c4 != NULL) {
+		nodes.push_back(node->c4);
+	}
+
+	//Continue printing the rest of the node
+	for(unsigned int i = 0; i < nodes.size(); i++) {
+		traversePreorder(nodes[i], depth + 1, indent, i == nodes.size() - 1);
+	}
 }
-
-
-
 
