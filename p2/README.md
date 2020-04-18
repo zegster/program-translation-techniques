@@ -76,6 +76,7 @@ Note that the parser should be calling the scanner for each new token. This shou
 ##
 
 **Testing**
+
 Create files using the algorithm to generate programs from the grammar, starting with simplest programs one different statement at a time and then building sequences of statements and then nested statements, expressions, etc. You may skip comments but then test a comment in some files. Make sure to have sequences of statements, nested statements (blocks), nested ifs and loops, variables in various blocks, expressions, and to test all operators.
 ##
 

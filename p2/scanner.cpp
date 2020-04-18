@@ -138,6 +138,12 @@ void Scanner::invokeEOF(Token &tk)
 }
 
 
+/* ====================================================================================================
+* Function    :  filterScan()
+* Definition  :  scan the source file and remove all comment tag, then out the filtered scan to a file.
+* Parameter   :  source file name and output file name.
+* Return      :  none.
+==================================================================================================== */
 void Scanner::filterScan(string input_file_name, string output_file_name)
 {
 	ifstream source_file(input_file_name.c_str());

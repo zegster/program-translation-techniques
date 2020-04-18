@@ -7,8 +7,6 @@
 #ifndef TESTTREE_H
 #define TESTTREE_H
 #include <cstdio>        //Input and Output operations can also be performed in C+e
-#include <cstring>       //Defines several functions to manipulate C strings and arrays.
-#include <fstream>       //Input and output stream class to operate on files.
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <vector>        //Vectors are sequence containers representing arrays that can change in size.

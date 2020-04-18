@@ -354,8 +354,7 @@ NodeT *Parser::mStat()
 
 /* ====================================================================================================
 * Function    :  stat()
-* Definition  :  <stat> -> <in> ; | <out> ; | <block> | <if> ; | <loop> ; | <assign> ; | <goto> ; | 
-                  <label> ; 
+* Definition  :  <stat> -> <in> ; | <out> ; | <if> ; | <loop> ; | <assign> ; | <goto> ; | <label> ; | <block>
 * Parameter   :  none. 
 * Return      :  individual NodeT.
 ==================================================================================================== */
@@ -701,7 +700,7 @@ NodeT *Parser::goTo()
 
 /* ====================================================================================================
 * Function    :  RO()
-* Definition  :  <RO> -> < | < < (two tokens) | > | > > (two tokens) | == (one token ==) | < > (two tokens) 
+* Definition  :  <RO> -> < | << (two tokens) | > | >> (two tokens) | == (one token ==) | <> (two tokens) 
 * Parameter   :  none. 
 * Return      :  individual NodeT.
 ==================================================================================================== */

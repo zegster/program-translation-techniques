@@ -52,13 +52,11 @@ class Parser: public Scanner
 		NodeT *RO();
 
 		//Parser Function
-		//void nextScan();
+		void nextScan();
 		NodeT *createNode(string production_name);
 		void parserError();
 
 	public:
-	
-		void nextScan();
 		Parser(string file_name);
 		NodeT *parse();
 };
