@@ -21,7 +21,7 @@ class Scanner: public Language
 {
 	private:
 		//Scanner Tracker
-		unsigned int current_scanner_pointer = -1;  //Keep track when the scanner is finish scanning the current input. Must init to 0.
+		unsigned int current_scanner_pointer = 0;   //Keep track when the scanner is finish scanning the current input. Must init to 0.
 		bool isCommenting = false;                  //Keep track when the scanner encounter a comment.
 		string lastCommentPosition = "";            //Keep track the last known open comment tag.
 
