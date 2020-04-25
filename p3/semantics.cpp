@@ -17,7 +17,7 @@ void Semantics::checkDeclare(Token tk)
 	//Find the given variable in the symbol table. If exist, then it is already declare and should error
 	int is_declared = -1;
 	for(unsigned int i = 0; i < st.size(); i++) {
-		if(st[i].token.value == tk.value) {
+		if(st[i].identifier.value == tk.value) {
 			is_declared = i;
 			break;
 		}
@@ -26,10 +26,10 @@ void Semantics::checkDeclare(Token tk)
 	//If positive, then the variable is already declared
 	if(is_declared > -1) {
 		cout << "[SEMANTICS ERROR] the variable [" << tk.value << "] on line (" << tk.line_number <<
-		") -> has already been declared on line (" << st[is_declared].token.line_number << ")" << endl;
-		//exit(EXIT_FAILURE);  //Comment this out to continue semantic check
+		") -> has already been declared on line (" << st[is_declared].identifier.line_number << ")" << endl;
+		exit(EXIT_FAILURE);  //Comment this out to continue semantic check
 	} else {
-		st_holder.token = tk;
+		st_holder.identifier = tk;
 		st.push_back(st_holder);
 	}
 }
@@ -46,7 +46,7 @@ void Semantics::checkDefined(Token tk)
 	//Find the given variable in the symbol table. If exist, then it is already declare and should error
 	int is_declared = -1;
 	for(unsigned int i = 0; i < st.size(); i++) {
-		if(st[i].token.value == tk.value) {
+		if(st[i].identifier.value == tk.value) {
 			is_declared = i;
 			break;
 		}
@@ -56,7 +56,7 @@ void Semantics::checkDefined(Token tk)
 	if(is_declared < 0) {
 		cout << "[SEMANTICS ERROR] the variable [" << tk.value << "] on line (" << tk.line_number <<
 		") -> is not on the stack and not yet been declared" << endl;
-		//exit(EXIT_FAILURE);  //Comment this out to continue semantic check
+		exit(EXIT_FAILURE);  //Comment this out to continue semantic check
 	}
 }
 

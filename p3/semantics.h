@@ -15,7 +15,8 @@ using namespace std;
 
 typedef struct symbol_table
 {
-	Token token;
+	Token identifier;
+	//Token value;
 	//Can add more expansion later...
 } SymbolTable;
 
