@@ -31,6 +31,7 @@ class Semantics: public Language
 		vector<SymbolTable> st;
 
 		unsigned int tempvars_num = 0;
+		unsigned int templabels_num = 0;
 
 		void checkDeclare(Token id, Token val);
 		void checkDefined(Token tk);

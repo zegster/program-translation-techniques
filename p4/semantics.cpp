@@ -280,16 +280,85 @@ void Semantics::generate(NodeT *node)
 	}
 
 	//* <iffy> -> iffy [ <expr> <RO> <expr> ] then <stat>
+	if(node->label == "<iffy>") {
+		int vars_num = tempvars_num;
+		int labels_num = templabels_num;
+		tempvars_num++;
+		templabels_num++;
+
+		generate(node->c1);
+		file << "STORE _T" << vars_num << endl;
+		generate(node->c3);
+		file << "SUB _T" << vars_num << endl;
+		//******
+		file << "BRNEG _L" << labels_num << endl;
+		file << "BRPOS _L" << labels_num << endl;
+		generate(node->c4);
+		file << "_L" << labels_num << ": NOOP" << endl;
+	}
 
 	//* <loop> -> loop [ <expr> <RO> <expr> ] <stat>
+	if(node->label == "<loop>") {
+		int vars_num = tempvars_num;
+		int prev_labels_num = templabels_num;
+		tempvars_num++;
+		int labels_num = templabels_num;
+		tempvars_num++;
+		templabels_num++;
+
+		file << "_L" << prev_labels_num << ": NOOP" << endl;
+		generate(node->c1);
+		file << "STORE _T" << vars_num << endl;
+		generate(node->c3);
+		file << "SUB _T" << vars_num << endl;
+		file << "BRNEG _L" << labels_num << endl;
+		file << "BRPOS _L" << labels_num << endl;
+		generate(node->c4);
+		file << "BR _L" << prev_labels_num << endl;
+		file << "_L" << labels_num << ": NOOP" << endl;
+	}
 
 	//* <assign> -> Identifier := <expr>
+	if(node->label == "<assign>") {
+		generate(node->c1);
+		file << "STORE " << node->tokens[0].value << endl;
+	}
 
 	//* <label> -> label Identifier
+	if(node->label == "<label>") {
+
+	}
 
 	//* <goto> -> goto Identifier
+	if(node->label == "<goto>") {
 
-	//* <RO> -> < | << (two tokens) | > | >> (two tokens) | == (one token ==) | <> (two tokens) 
+	}
+
+	//* <RO> -> < | << (two tokens) | > | >> (two tokens) | == (one token ==) | <> (two tokens)
+	if(node->label == "<RO>") {
+		Token tk = node->tokens[0];
+		/* CHECK: < | < < | < > */
+		if((operator_map[tk.value] == "lessThanTk") {
+
+			if(operator_map[tk.value] == "lessThanTk") {
+
+			}
+			else if(operator_map[tk.value] == "greaterThanTk") {
+			}
+
+		}
+		/* CHECK: > | > > */
+		else if(operator_map[tk.value] == "greaterThanTk") {
+
+			if((operator_map[tk.value] == "greaterThanTk") {
+
+			}
+		}
+		/* CHECK: == */
+		else if(operator_map[tk.value] == "equalEqualTk") {
+			file << 
+		}
+	}
 }
 
 
