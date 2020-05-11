@@ -236,12 +236,7 @@ void Semantics::generate(NodeT *node)
 			generate(node->c1);
 		} else {
 			Token tk = node->tokens[0];
-			if(tk.id == idTk) {
-				file << "LOAD " << tk.value << endl;
-			}
-			else if(tk.id == intTk) {
-				file << "LOAD " << tk.value << endl;
-			}
+			file << "LOAD " << tk.value << endl;
 
 			return;
 		}
@@ -254,7 +249,7 @@ void Semantics::generate(NodeT *node)
 	}
 
 	//* <mStat> -> empty | <stat> <mStat>
-	if(node->label == "<mStat") {
+	if(node->label == "<mStat>") {
 		if(node->tokens.empty()) {
 			generate(node->c1);
 			generate(node->c2);
@@ -267,6 +262,10 @@ void Semantics::generate(NodeT *node)
 	}
 
 	//* <in> -> in Identifier
+	if(node->label == "<in>") {
+		file << "READ " << node->tokens[0].value << endl;
+		return;
+	}
 
 	//* <out> -> out <expr>
 	if(node->label == "<out>") {
