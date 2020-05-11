@@ -1,6 +1,7 @@
 # Ignore all object file produced by a C/C++ compiler
 *.o
 *.dat
+*.asm
 *.sp2020
 
 # Ignore other file

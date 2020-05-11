@@ -1,8 +1,0 @@
-READ x
-LOAD 99
-STORE _T0
-WRITE _T0
-STOP
-x 5
-y 7
-_T0 0
