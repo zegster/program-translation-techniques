@@ -229,19 +229,22 @@ int Scanner::scan(string &input, Token &tk)
 					if(getKeyword(tk) != -1) { //Keyword?
 						tk.id = keywordTk;
 						tk.data.assign(read_value);
+						tk.type.assign("");
 						tk.value.assign(read_value);
 					}
 					else {
 						tk.id = idTk;
 						tk.data.assign(read_value);
-						tk.value.assign("idTk " + read_value);
+						tk.type.assign("idTk");
+						tk.value.assign(read_value);
 					}
 					break;
 
 				case STATE_INT: //Integer
 					tk.id = intTk;
 					tk.data.assign(read_value);
-					tk.value.assign("intTk " + read_value);
+					tk.type.assign("intTk");
+					tk.value.assign(read_value);
 					break;
 
 				case STATE_OP: //Operator
@@ -257,10 +260,12 @@ int Scanner::scan(string &input, Token &tk)
 					}
 
 					tk.data.assign(read_value);
+					tk.type.assign("");
 					tk.value.assign(read_value);
 
 					getOperator(tk);
 					tk.data.assign(read_value);
+					tk.type.assign("");
 					tk.value.assign(read_value);
 					break;
 			}

@@ -23,4 +23,4 @@ $(MASTER): $(MASTER_OBJ) $(OBJ)
 
 .PHONY: clean
 clean:
-	/bin/rm -f $(OUTPUT) *.o *.dat
+	/bin/rm -f $(OUTPUT) *.o *.dat *.asm

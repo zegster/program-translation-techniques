@@ -29,6 +29,9 @@ void traversePreorder(NodeT *node, int depth, string indent, bool last)
 
 	//Label Production
 	for(unsigned int i = 0; i < node->tokens.size(); i++) {
+		if(!node->tokens[i].type.empty()) {
+			cout << node->tokens[i].type << " ";
+		}
 		cout << node->tokens[i].value;
 
 		//Separate multiple tokens on a node by a comma

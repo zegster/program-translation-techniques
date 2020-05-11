@@ -21,7 +21,8 @@ typedef struct token
 	token_id id;        //The id that represent the token category
 	int line_number;    //Line location of where the token reside
 	string data;        //The actual scan value of the token
-	string value;       //The description value of the token
+	string type;	    //The type of the token
+	string value;       //The value of the token
 } Token;
 
 /* Language Class */

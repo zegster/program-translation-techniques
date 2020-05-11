@@ -6,6 +6,7 @@
 ==================================================================================================== */
 #ifndef SEMANTICS_H
 #define SEMANTICS_H
+#include <fstream>       //Input and output stream class to operate on files.
 #include <iostream>      //For cout and cin; input and output.
 #include <string>        //Introduces string types, character traits and a set of converting functions.
 #include <vector>        //Vectors are sequence containers representing arrays that can change in size.
@@ -16,11 +17,11 @@ using namespace std;
 typedef struct symbol_table
 {
 	Token identifier;
-	//Token value;
+	Token value;
 	//Can add more expansion later...
 } SymbolTable;
 
-class Semantics
+class Semantics: public Language
 {
 	private:
 		ofstream file;
@@ -29,12 +30,16 @@ class Semantics
 		SymbolTable st_holder;
 		vector<SymbolTable> st;
 
-		void checkDeclare(Token tk);
+		unsigned int tempvars_num = 0;
+
+		void checkDeclare(Token id, Token val);
 		void checkDefined(Token tk);
+		void validate(NodeT *node);
+		void generate(NodeT *node);
 
 	public:
 		Semantics(string file_name);
-		void validate(NodeT *node);
+		void codeGeneration(NodeT *node);
 };
 
 #endif
