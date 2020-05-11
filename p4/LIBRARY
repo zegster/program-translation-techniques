@@ -1,0 +1,11 @@
+#include <cctype>        //Classify and transform individual characters.
+#include <cstdio>        //Input and Output operations can also be performed in C++ using the C Standard Input and Output Library.
+#include <cstdlib>       //Defines several general purpose functions.
+#include <cstring>       //Defines several functions to manipulate C strings and arrays.
+#include <fstream>       //Input and output stream class to operate on files.
+#include <iostream>      //For cout and cin; input and output.
+#include <map>           //Dictionary like data structure.
+#include <sstream>       //Header providing string stream classes.
+#include <string>        //Introduces string types, character traits and a set of converting functions.
+#include <vector>        //Vectors are sequence containers representing arrays that can change in size.
+
