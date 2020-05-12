@@ -803,8 +803,8 @@ NodeT *Parser::createNode(string production_name)
 ==================================================================================================== */
 void Parser::parserError(string expected_token)
 {
-	cout << "[PARSER ERROR] parsing error at " << scanner.getScannerPosition() << " -> expected " 
-		<< expected_token << " -> but received " << tk.value << "" << endl;
+	cout << "[PARSER ERROR] parsing error at " << scanner.getScannerPosition() << " -> " 
+		<< expected_token << " is expected -> but received \"" << tk.value << "\"" << endl;
 	file.close();
 	exit(EXIT_FAILURE);
 }

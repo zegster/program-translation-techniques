@@ -283,27 +283,33 @@ void Semantics::generate(NodeT *node)
 		file << "STORE _T" << vars_num << endl;
 		generate(node->c3);
 		file << "SUB _T" << vars_num << endl;
+
+		int exit_loop_num = current_labels_num;
+		carry_labels_num = current_labels_num++;
 		generate(node->c2);
 		generate(node->c4);
-		file << "_L" << current_labels_num++ << ": NOOP" << endl;
+		file << "_L" << exit_loop_num << ": NOOP" << endl;
 
 		return;
 	}
 
 	//* <loop> -> loop [ <expr> <RO> <expr> ] <stat>
 	if(node->label == "<loop>") {
+		int loop_num = current_labels_num++;
 		int vars_num = current_temp_vars_num++;
-		prev_labels_num = current_labels_num;
 
-		file << "_L" << current_labels_num++ << ": NOOP" << endl;
+		file << "_L" << loop_num << ": NOOP" << endl;
 		generate(node->c1);
 		file << "STORE _T" << vars_num << endl;
 		generate(node->c3);
 		file << "SUB _T" << vars_num << endl;
+		
+		int exit_loop_num = current_labels_num;
+		carry_labels_num = current_labels_num++;
 		generate(node->c2);
 		generate(node->c4);
-		file << "BR _L" << prev_labels_num << endl;
-		file << "_L" << current_labels_num++ << ": NOOP" << endl;
+		file << "BR _L" << loop_num << endl;
+		file << "_L" << exit_loop_num << ": NOOP" << endl;
 
 		return;
 	}
@@ -330,26 +336,26 @@ void Semantics::generate(NodeT *node)
 		/* CHECK: < | < < | < > */
 		if(operator_map[node->tokens[0].value] == "lessThanTk") {
 			if(node->tokens.size() > 1 && operator_map[node->tokens[1].value] == "lessThanTk") {
-				file << "BRNEG _L" << current_labels_num << endl;
+				file << "BRNEG _L" << carry_labels_num << endl;
 			}
 			else if(node->tokens.size() > 1 && operator_map[node->tokens[1].value] == "greaterThanTk") {
-				file << "BRZERO _L" << current_labels_num << endl;
+				file << "BRZERO _L" << carry_labels_num << endl;
 			} else {
-				file << "BRZNEG _L" << current_labels_num << endl;
+				file << "BRZNEG _L" << carry_labels_num << endl;
 			}
 		}
 		/* CHECK: > | > > */
 		else if(operator_map[node->tokens[0].value] == "greaterThanTk") {
 			if(node->tokens.size() > 1 && operator_map[node->tokens[1].value] == "greaterThanTk") {
-				file << "BRPOS _L" << current_labels_num << endl;
+				file << "BRPOS _L" << carry_labels_num << endl;
 			} else {
-				file << "BRZPOS _L" << current_labels_num << endl;
+				file << "BRZPOS _L" << carry_labels_num << endl;
 			}
 		}
 		/* CHECK: == */
 		else if(operator_map[node->tokens[0].value] == "equalEqualTk") {
-			file << "BRNEG _L" << current_labels_num << endl;
-			file << "BRPOS _L" << current_labels_num << endl;
+			file << "BRNEG _L" << carry_labels_num << endl;
+			file << "BRPOS _L" << carry_labels_num << endl;
 		}
 		
 		return;

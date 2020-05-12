@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 
 	/* Invoke functionality */
 	NodeT *root = parser.parse();
-	traversePreorder(root);  //Temporary turn OFF
+	//traversePreorder(root);  //Temporary turn OFF
 	semantics.codeGeneration(root);	
 
 	return 0;

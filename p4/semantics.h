@@ -30,9 +30,8 @@ class Semantics: public Language
 		SymbolTable st_holder;
 		vector<SymbolTable> st;
 
-		unsigned int prev_temp_vars_num = 0;
 		unsigned int current_temp_vars_num = 0;
-		unsigned int prev_labels_num = 0;
+		unsigned int carry_labels_num = 0;
 		unsigned int current_labels_num = 0;
 
 		void checkDeclare(Token id, Token val);
