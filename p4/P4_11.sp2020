@@ -1,0 +1,9 @@
+declare x :=1;
+{
+	in x;
+	loop [x > 0] {
+		out x;
+		x := x - 1;
+	};
+}
+#Print input then input-1, ..., down to 1#

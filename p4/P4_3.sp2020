@@ -1,0 +1,15 @@
+#Credit to original author for this test case (Jackson Hoenig)#
+declare x := 5;
+{
+        declare y := 0;
+        in x;
+        loop [y < x] {
+                declare a := 2;
+                a := 3;
+                y := y + 1;
+                out y;
+        };
+        out 100;
+}
+#It should print the sequence of number you enter and finish with 100#
+#i.e. if enter 5 -> 1 2 3 4 5 100#

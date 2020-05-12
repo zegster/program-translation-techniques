@@ -1,0 +1,17 @@
+#Credit to original author for this test case (Jackson Hoenig)#
+declare num := 0;
+{
+        num := num + 1;
+        out num;
+        num := 2 * 10 / 10;
+        out num;
+        num := 3 * (10 - 9);
+        out num;
+        num := *4 * 5 + *8 / 2;
+        out num;
+        num := ((1 + 2) - ( 12 - 10)) * 5;
+        out num;
+        num := (6 * 6 / 6 - 6 + *6);
+        out num;
+}
+#Print out 1 2 3 4 5#

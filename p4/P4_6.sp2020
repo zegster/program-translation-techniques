@@ -1,0 +1,16 @@
+{
+	iffy [9>5] then {
+		iffy[7>>6] then {
+			iffy[6>>6] then {
+				iffy[9<10] then {
+					iffy[9<<10] then {
+						iffy   [0<<0] then {
+							iffy[1 < > 2] then out 1; ;
+						};
+					};
+				};
+			};
+		};
+	};
+}
+#Print out 1#

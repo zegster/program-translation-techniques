@@ -1,0 +1,14 @@
+declare x := 1;
+declare y := 3;
+{
+	declare z := 3;
+	in x;
+	{
+		in y;
+		in z;
+		out z;
+	}
+	out y;
+	out x;
+}
+#Should print out 3 inputs in reverse#

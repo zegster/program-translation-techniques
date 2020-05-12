@@ -2,7 +2,10 @@
 *.o
 *.dat
 *.asm
-*.sp2020
+p0/*.sp2020
+p1/*.sp2020
+p2/*.sp2020
+p3/*.sp2020
 
 # Ignore other file
 SUBMIT

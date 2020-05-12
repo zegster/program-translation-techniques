@@ -1,0 +1,7 @@
+{
+    iffy [4 < 5] then {
+        iffy [5 < 2] then out 1 ; ;
+        out 2 ;
+    } ;
+}
+#It should only print out 2#

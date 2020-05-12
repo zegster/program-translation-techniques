@@ -1,0 +1,16 @@
+#Credit to original author for this test case (Daniel Janis and Johnathan Soderstrom)#
+{
+        iffy [4==5] then out 1;;
+        iffy [5==5] then out 2;;
+        iffy [5<4] then out 1;;
+        iffy [4<5] then out 2;;
+        iffy [5<<4] then out 1;;
+        iffy [5<<5] then out 2;;
+        iffy [4>5] then out 1;;
+        iffy [6>5] then out 2;;
+        iffy [4>>5] then out 1;;
+        iffy [5>>5] then out 2;;
+        iffy [5<>5] then out 1;;
+        iffy [6<>5] then out 2;;
+}
+#It should only print out 2#

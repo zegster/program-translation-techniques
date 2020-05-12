@@ -1,0 +1,11 @@
+#Credit to original author for this test case (Daniel Janis and Johnathan Soderstrom)#
+declare x := 5;
+{
+        loop [9 << 1] out 1;;
+        loop [x << 10]
+        {
+         out x;
+         x := x+1;
+        }; out x;
+}
+#It should print 5 to 11#

@@ -1,0 +1,7 @@
+{
+        iffy [9>5] then out 1;;
+        iffy [7>>6] then out 2;;
+        iffy [6>>6] then out 3;;
+        iffy [9>>10] then out 4;;
+}
+#Print out 1 2 3#

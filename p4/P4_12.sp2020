@@ -1,0 +1,17 @@
+declare x := 1;
+declare y := 2;
+{
+	in x;
+	loop [x > 0] {
+		y := x;
+		loop [y > 0]
+		{
+			out y;
+			y := y -2;
+		};
+		x := x- 1;
+	};
+	out y;
+}
+#Print input and input-2 down to 1, then input-1 and input-3 down to 1, ...#
+#When enter 10: 10 8 6 4 2 9 7 5 3 1 8 6 4 2 7 5 3 1 6 4 2 5 3 1 4 2 3 1 2 1 -1#

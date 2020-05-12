@@ -1,0 +1,16 @@
+declare x := 0;
+{
+	loop [x < 100]
+	{
+		declare y := 0;
+		declare z := 0;
+		loop [y < 10] 
+		{
+			y := y + 1;
+			z := x + y;
+			out z;
+		};
+		x := x + 10;
+	};
+}
+#It should print out 1 to 10#
