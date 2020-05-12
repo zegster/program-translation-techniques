@@ -139,7 +139,7 @@ void Semantics::generate(NodeT *node)
 		for(unsigned int i = 0; i < st.size(); i++) {
 			file << st[i].identifier.value << " " << st[i].value.value << endl;
 		}
-		for(unsigned int i = 0; i < tempvars_num; i++) {
+		for(unsigned int i = 0; i < current_temp_vars_num; i++) {
 			file << "_T" << i << " 0" << endl; 
 		}
 
@@ -150,11 +150,13 @@ void Semantics::generate(NodeT *node)
 	if(node->label == "<block>") {
 		generate(node->c1);
 		generate(node->c2);
+		return;
 	}
 
 	//* <vars> -> empty | declare Identifier := Integer ; <vars>
 	if(node->label == "<vars>") {
 		generate(node->c1);
+		return;
 	}
 
 	//* <expr> -> <N> - <expr> | <N>
@@ -162,8 +164,7 @@ void Semantics::generate(NodeT *node)
 		if(node->tokens.empty()) {
 			generate(node->c1);
 		} else {
-			int vars_num = tempvars_num;
-			tempvars_num++;
+			int vars_num = current_temp_vars_num++;
 			
 			generate(node->c2);
 			file << "STORE _T" << vars_num << endl;
@@ -172,9 +173,8 @@ void Semantics::generate(NodeT *node)
 			if(operator_map[node->tokens[0].value] == "minusTk") {
 				file << "SUB _T" << vars_num << endl;
 			}
-
-			return;
 		}
+		return;
 	}
 
 	//* <N> -> <A> / <N> | <A> * <N> | <A> 
@@ -182,8 +182,7 @@ void Semantics::generate(NodeT *node)
 		if(node->tokens.empty()) {
 			generate(node->c1);
 		} else {
-			int vars_num = tempvars_num;
-			tempvars_num++;
+			int vars_num = current_temp_vars_num++;
 			
 			generate(node->c2);
 			file << "STORE _T" << vars_num << endl;
@@ -195,9 +194,8 @@ void Semantics::generate(NodeT *node)
 			else if(operator_map[node->tokens[0].value] == "multiplyTk") {
 				file << "MULT _T" << vars_num << endl;
 			}
-
-			return;
 		}
+		return;
 	}
 
 	//* <A> -> <M> + <A> | <M>
@@ -205,8 +203,7 @@ void Semantics::generate(NodeT *node)
 		if(node->tokens.empty()) {
 			generate(node->c1);
 		} else {
-			int vars_num = tempvars_num;
-			tempvars_num++;
+			int vars_num = current_temp_vars_num++;
 			
 			generate(node->c2);
 			file << "STORE _T" << vars_num << endl;
@@ -215,9 +212,8 @@ void Semantics::generate(NodeT *node)
 			if(operator_map[node->tokens[0].value] == "plusTk") {
 				file << "ADD _T" << vars_num << endl;
 			}
-
-			return;
 		}
+		return;
 	}
 
 	//* <M> -> * <M> | <R>
@@ -226,7 +222,6 @@ void Semantics::generate(NodeT *node)
 		if(!node->tokens.empty()) {
 			file << "MULT -1" << endl;
 		}
-
 		return;
 	}
 
@@ -237,15 +232,15 @@ void Semantics::generate(NodeT *node)
 		} else {
 			Token tk = node->tokens[0];
 			file << "LOAD " << tk.value << endl;
-
-			return;
 		}
+		return;
 	}
 
 	//* <stats> -> <stat> <mStat>
 	if(node->label == "<stats>") {
 		generate(node->c1);
 		generate(node->c2);
+		return;
 	}
 
 	//* <mStat> -> empty | <stat> <mStat>
@@ -254,11 +249,13 @@ void Semantics::generate(NodeT *node)
 			generate(node->c1);
 			generate(node->c2);
 		}
+		return;
 	}
 
 	//* <stat> -> <in> ; | <out> ; | <if> ; | <loop> ; | <assign> ; | <goto> ; | <label> ; | <block>
 	if(node->label == "<stat>") {
 		generate(node->c1);
+		return;
 	}
 
 	//* <in> -> in Identifier
@@ -269,8 +266,7 @@ void Semantics::generate(NodeT *node)
 
 	//* <out> -> out <expr>
 	if(node->label == "<out>") {
-		int vars_num = tempvars_num;
-		tempvars_num++;
+		int vars_num = current_temp_vars_num++;
 		
 		generate(node->c1);
 		file << "STORE _T" << vars_num << endl;
@@ -281,83 +277,82 @@ void Semantics::generate(NodeT *node)
 
 	//* <iffy> -> iffy [ <expr> <RO> <expr> ] then <stat>
 	if(node->label == "<iffy>") {
-		int vars_num = tempvars_num;
-		int labels_num = templabels_num;
-		tempvars_num++;
-		templabels_num++;
+		int vars_num = current_temp_vars_num++;
 
 		generate(node->c1);
 		file << "STORE _T" << vars_num << endl;
 		generate(node->c3);
 		file << "SUB _T" << vars_num << endl;
-		//******
-		file << "BRNEG _L" << labels_num << endl;
-		file << "BRPOS _L" << labels_num << endl;
+		generate(node->c2);
 		generate(node->c4);
-		file << "_L" << labels_num << ": NOOP" << endl;
+		file << "_L" << current_labels_num++ << ": NOOP" << endl;
+
+		return;
 	}
 
 	//* <loop> -> loop [ <expr> <RO> <expr> ] <stat>
 	if(node->label == "<loop>") {
-		int vars_num = tempvars_num;
-		int prev_labels_num = templabels_num;
-		tempvars_num++;
-		int labels_num = templabels_num;
-		tempvars_num++;
-		templabels_num++;
+		int vars_num = current_temp_vars_num++;
+		prev_labels_num = current_labels_num;
 
-		file << "_L" << prev_labels_num << ": NOOP" << endl;
+		file << "_L" << current_labels_num++ << ": NOOP" << endl;
 		generate(node->c1);
 		file << "STORE _T" << vars_num << endl;
 		generate(node->c3);
 		file << "SUB _T" << vars_num << endl;
-		file << "BRNEG _L" << labels_num << endl;
-		file << "BRPOS _L" << labels_num << endl;
+		generate(node->c2);
 		generate(node->c4);
 		file << "BR _L" << prev_labels_num << endl;
-		file << "_L" << labels_num << ": NOOP" << endl;
+		file << "_L" << current_labels_num++ << ": NOOP" << endl;
+
+		return;
 	}
 
 	//* <assign> -> Identifier := <expr>
 	if(node->label == "<assign>") {
 		generate(node->c1);
 		file << "STORE " << node->tokens[0].value << endl;
+		return;
 	}
 
 	//* <label> -> label Identifier
 	if(node->label == "<label>") {
-
+		file << node->tokens[0].value << ": NOOP" << endl;
 	}
 
 	//* <goto> -> goto Identifier
 	if(node->label == "<goto>") {
-
+		file << "BR " << node->tokens[0].value << endl;
 	}
 
 	//* <RO> -> < | << (two tokens) | > | >> (two tokens) | == (one token ==) | <> (two tokens)
 	if(node->label == "<RO>") {
-		Token tk = node->tokens[0];
 		/* CHECK: < | < < | < > */
-		if((operator_map[tk.value] == "lessThanTk") {
-
-			if(operator_map[tk.value] == "lessThanTk") {
-
+		if(operator_map[node->tokens[0].value] == "lessThanTk") {
+			if(node->tokens.size() > 1 && operator_map[node->tokens[1].value] == "lessThanTk") {
+				file << "BRNEG _L" << current_labels_num << endl;
 			}
-			else if(operator_map[tk.value] == "greaterThanTk") {
+			else if(node->tokens.size() > 1 && operator_map[node->tokens[1].value] == "greaterThanTk") {
+				file << "BRZERO _L" << current_labels_num << endl;
+			} else {
+				file << "BRZNEG _L" << current_labels_num << endl;
 			}
-
 		}
 		/* CHECK: > | > > */
-		else if(operator_map[tk.value] == "greaterThanTk") {
-
-			if((operator_map[tk.value] == "greaterThanTk") {
-
+		else if(operator_map[node->tokens[0].value] == "greaterThanTk") {
+			if(node->tokens.size() > 1 && operator_map[node->tokens[1].value] == "greaterThanTk") {
+				file << "BRPOS _L" << current_labels_num << endl;
+			} else {
+				file << "BRZPOS _L" << current_labels_num << endl;
 			}
 		}
 		/* CHECK: == */
-		else if(operator_map[tk.value] == "equalEqualTk") {
-			file << 
+		else if(operator_map[node->tokens[0].value] == "equalEqualTk") {
+			file << "BRNEG _L" << current_labels_num << endl;
+			file << "BRPOS _L" << current_labels_num << endl;
 		}
+		
+		return;
 	}
 }
 
@@ -368,6 +363,7 @@ void Semantics::codeGeneration(NodeT *node)
 	cout << "[INFO] semantic validate complete with no error... continue to the next step." << endl;
 	generate(node);
 	cout << "[INFO] code generation complete..." << endl;
+	cout << "[INFO] file output => \"" << output_file_name << "\"" << endl;
 	file.close();
 }
 
