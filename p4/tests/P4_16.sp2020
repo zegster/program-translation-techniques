@@ -1,0 +1,10 @@
+#Credit to orignal author for this test case (Johnathan Soderstrom)#
+{
+iffy [ 6 < 5 ] then out *1 ;;
+iffy [ 5 < 5 ] then out *1 ;;
+iffy [ 4 < 5 ] then out 1 ;;
+iffy [ 6 << 5 ] then out *1 ;;
+iffy [ 5 << 5 ] then out 2 ;;
+iffy [ 4 << 5 ] then out 3 ;;
+}
+#It should print out 1 2 3#

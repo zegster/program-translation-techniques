@@ -1,0 +1,30 @@
+#Credit to orignal author for this test case (Jackson Hoenig)#
+declare num := 0;
+{
+        num := num + 1;
+        out num;
+        num := 2 * 10 / 10;
+        out num;
+        num := 3 * 10 - 27;  #mult higher prec then -. 30 -27#
+        out num;
+        num := *4 * 5 + *8 / 2;
+        out num;
+
+        num := (4 * 5) - ( 3 * 5); # 1+2 = 3, 3 - 2 =1 #
+        out num;
+
+        num := (6 * 6 / 6 - 6 + *6);
+        out num;
+
+        num := ((49 / 7) * 3) - 14;
+        out num;
+
+        num := (((((((*100 / 10) * 9) / 8) - *7) + *6) / 5) * *4);
+        out num;
+
+        num := (((1 + 2) - (3 - 6)) * 3) / 2;
+        out num;
+
+        out 10;
+}
+#It should print out 1 to 10#

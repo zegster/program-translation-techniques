@@ -102,7 +102,7 @@ void Semantics::validate(NodeT *node)
 	}
 	//Check for other label (whether identifier is defined or not)
 	else {
-		vector<string> labels = { "<R>", "<in>", "<assign>", "<label>", "<goTo>" };
+		vector<string> labels = { "<R>", "<in>", "<assign>" };
 		for(unsigned int i = 0; i < labels.size(); i++) {
 			if(node->label == labels[i]) {
 				for(unsigned int ii = 0; ii < node->tokens.size(); ii++) {

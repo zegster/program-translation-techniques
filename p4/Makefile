@@ -26,4 +26,4 @@ clean:
 	/bin/rm -f $(OUTPUT) *.o *.dat *.asm
 
 dump:
-	/bin/rm -f *.asm
+	/bin/rm -f *.asm tests/*.asm
