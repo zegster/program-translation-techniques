@@ -1,5 +1,5 @@
 #Credit to orignal author for this test case (Jackson Hoenig)#
-declare a:= 3;
+declare a:= 5;
 declare b:= 2;
 {
         declare c := 4;
@@ -20,9 +20,6 @@ declare b:= 2;
                 out f;
 
         }
-
-
         label END;
-
 }
 #It should print out 10 to 1 and then print out your input#
