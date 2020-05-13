@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 			//Close file when done
 			cout << "[NOTICE] Finish inputting! Proceeding..." << endl << endl;
 			temp_file.close();
-			output_file_name = "output";
+			output_file_name = "kb";
 			break;
 		}
 

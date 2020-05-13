@@ -20,7 +20,6 @@ Semantics::Semantics(string file_name)
 
 	//Construct output file name [.asm]
 	output_file_name.assign(file_name + ".asm");
-	file.open(output_file_name.c_str());
 }
 
 
@@ -367,6 +366,7 @@ void Semantics::codeGeneration(NodeT *node)
 {
 	validate(node);
 	cout << "[INFO] semantic validate complete with no error... continue to the next step." << endl;
+	file.open(output_file_name.c_str());
 	generate(node);
 	cout << "[INFO] code generation complete..." << endl;
 	cout << "[INFO] file output => \"" << output_file_name << "\"" << endl;

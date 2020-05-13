@@ -23,7 +23,7 @@ $(MASTER): $(MASTER_OBJ) $(OBJ)
 
 .PHONY: clean
 clean:
-	/bin/rm -f $(OUTPUT) *.o *.dat *.asm
+	/bin/rm -f $(OUTPUT) *.o *.dat *.asm tests/*.asm
 
 dump:
 	/bin/rm -f *.asm tests/*.asm
