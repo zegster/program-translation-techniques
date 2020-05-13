@@ -121,6 +121,7 @@ The program should do code generation as well as do global storage allocation in
 ```
 
 **Examples of invocations (VirtMach)**
+
 **NOTE:** `.asm` file can also be run on the [VirtMach IDE](https://comp.umsl.edu/assembler/index)
 ```
     ./VirtMach P4_1.asm 
