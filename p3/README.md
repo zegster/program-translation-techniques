@@ -1,4 +1,3 @@
-
 # Project 3 - Static Semantics
 > Note: program implemented using FSA table and driver.
 
