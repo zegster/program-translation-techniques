@@ -85,12 +85,34 @@ The program should do code generation as well as do global storage allocation in
 * [VirtMach IDE](https://comp.umsl.edu/assembler/index)
 ##
 
+#### Testing
+* All sample test files is located in the `tests` folder/directory
+* When invoking `run.sh`, it will invoke code generation to all test files and all the `.asm` files will be save in the `tests` folder/directory
+* To remove all `.asm`, run `make dump`
+* `P4_1.sp2020` should only print out 2
+* `P4_2.sp2020` should print 5 to 11
+* `P4_3.sp2020` should print the sequence of number you enter and finish with 100
+* `P4_4.sp2020` should print out 1 2 3 4 5
+* `P4_5.sp2020` should print out 1 2 3
+* `P4_6.sp2020` should print out 1
+* `P4_7.sp2020` should print out 1 to 100
+* `P4_8.sp2020` should only print out 2
+* `P4_9.sp2020` should print 3 inputs in reverse
+* `P4_10.sp2020` should print out 3 inputs in reverse
+* `P4_11.sp2020` should print input then input-1, ..., down to 1
+* `P4_12.sp2020` should print input and input-2 down to 1, then input-1 and input-3 down to 1, ...
+* `P4_13.sp2020` should print out 1 to 100
+* `P4_14.sp2020` should print out 1 to 10
+* `P4_15.sp2020` should print out 10 to 1 and then print out your input
+* `P4_16.sp2020` should print out 1 2 3
+##
+
 #### HOW TO RUN
 1. In your command prompt, type: make
 2. This will generate .o file and executable file
 3. To use the program, type: ./comp [file] (or the name of your a.out)
 
-**Examples of invocations**
+**Examples of invocations (Code Generation/Compiler)**
 ```
     ./comp 
     ./comp < P4_test1.sp2020
@@ -98,4 +120,10 @@ The program should do code generation as well as do global storage allocation in
     ./comp P4_test5
 ```
 
+**Examples of invocations (VirtMach)**
+**NOTE:** `.asm` file can also be run on the [VirtMach IDE](https://comp.umsl.edu/assembler/index)
+```
+    ./VirtMach P4_1.asm 
+    ./VirtMach tests/P4_1.asm
+```
 
