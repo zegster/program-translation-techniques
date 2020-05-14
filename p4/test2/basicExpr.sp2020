@@ -1,0 +1,19 @@
+# Tests basic cases of all expressions #
+# All outputs should increment by 1 #
+{
+ out 1 - 0;
+ out 2 * 1;
+ out 7 / 2;
+ out 1 + 3;
+ out *4 + 9;
+
+ # Add cases within parentheses #
+ out (6);
+ out (19 - 12);
+ out (**4 + 4);
+ out (81 / 9);
+ out (2 * 5);
+
+ # Print a final value to make sure others work. Outputs should increment until this#
+ out 11;
+}

@@ -1,0 +1,15 @@
+# Tests basic loop conditions #
+# Basic RO checks are done in basicRO #
+# More complex RO checks will be made elsewhere #
+declare x := 0;
+{
+ # The negative number should not be output #
+ loop [ x > 0 ] out *1 ;;
+
+ # Positive numbers should be output up to 5 #
+ loop [ x < 5 ]
+ {
+  x := x + 1;
+  out x;
+ };
+}

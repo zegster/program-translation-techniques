@@ -14,4 +14,4 @@ declare num := 0;
         num := (6 * 6 / 6 - 6 + *6);
         out num;
 }
-#Print out 1 2 3 4 5#
+#Print out 1 2 3 4 5 6#

@@ -1,0 +1,30 @@
+# Run through every single case of relational operators without inner iffy/loop #
+# Negative numbers are output for cases that shouldn't happen #
+{
+ iffy [4 < 5] then out 1 ;;
+ iffy [5 < 5] then out *1 ;;
+ iffy [6 < 5] then out *2 ;;
+
+ iffy [4 << 5] then out 2 ;;
+ iffy [5 << 5] then out 3 ;;
+ iffy [6 << 5] then out *3 ;;
+
+ iffy [4 > 5] then out *4 ;;
+ iffy [5 > 5] then out *5 ;;
+ iffy [6 > 5] then out 4 ;;
+
+ iffy [4 >> 5] then out *6 ;;
+ iffy [5 >> 5] then out 5 ;;
+ iffy [6 >> 5] then out 6 ;;
+
+ iffy [4 == 5] then out *7 ;;
+ iffy [5 == 5] then out 7 ;;
+ iffy [6 == 5] then out *8 ;;
+
+ iffy [4 <> 5] then out 8 ;;
+ iffy [5 <> 5] then out *9 ;;
+ iffy [6 <> 5] then out 9 ;;
+
+ # Add a 10. If any number is missing from 1 to 10, something went wrong #
+ out 10 ;
+}

@@ -1,0 +1,18 @@
+# Tests a goto back and forward #
+# Only positive numbers should be written #
+declare lbl := 5 ;
+declare lbl2 := 5 ;
+{
+ label lbl ;
+ iffy [lbl == 5] then
+ {
+  out 1 ;
+  lbl := 6 ;	# Adds a check for a basic assign function #
+  goto lbl ;
+ };
+
+ goto lbl2 ;
+ out *1 ;
+ label lbl2 ;
+ out 2 ;
+}

@@ -1,14 +1,19 @@
 #Credit to orignal author for this test case (Jackson Hoenig)#
-declare a:= 5;
+declare a:= 3;
 declare b:= 2;
 {
         declare c := 4;
         declare d := 0;
         iffy [a < b ] then goto END;;
+				out 1;
         iffy [a << b ] then goto END;;
+				out 2;
         iffy [a > c ] then goto END;;
+				out 3;
         iffy [a >> c ] then goto END;;
+				out 4;
         iffy [a <> a ] then goto END;;
+				out 5;
         {
                 declare e:= 10;
                 declare f:= 1;
@@ -22,4 +27,4 @@ declare b:= 2;
         }
         label END;
 }
-#It should print out 10 to 1 and then print out your input#
+#It should print 1 to 5 then out 10 to 1 and then print out your input#

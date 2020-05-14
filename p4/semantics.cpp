@@ -325,8 +325,8 @@ void Semantics::generate(NodeT *node)
 		file << node->tokens[0].value << ": NOOP" << endl;
 	}
 
-	//* <goto> -> goto Identifier
-	if(node->label == "<goto>") {
+	//* <goTo> -> goto Identifier
+	if(node->label == "<goTo>") {
 		file << "BR " << node->tokens[0].value << endl;
 	}
 

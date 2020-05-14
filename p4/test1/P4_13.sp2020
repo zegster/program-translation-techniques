@@ -13,4 +13,4 @@ declare x := 0;
 		x := x + 10;
 	};
 }
-#It should print out 1 to 100#
+#It should print out 1 to 10#

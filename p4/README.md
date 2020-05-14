@@ -87,8 +87,10 @@ The program should do code generation as well as do global storage allocation in
 
 #### Testing
 * All sample test files is located in the `tests` folder/directory
-* When invoking `run.sh`, it will invoke code generation to all test files and all the `.asm` files will be save in the `tests` folder/directory
+* When invoking `run.sh [test_directory]`, it will invoke code generation to all test files and all the `.asm` files will be save in the `tests` folder/directory
+* For example: `sh run.sh test1`
 * To remove all `.asm`, run `make dump`
+* [OPTIONAL] to execute all test files, invoke `sh exec.sh test1` (must call `sh run.sh test1` first)
 * `P4_1.sp2020` should only print out 2
 * `P4_2.sp2020` should print 5 to 11
 * `P4_3.sp2020` should print the sequence of number you enter and finish with 100
@@ -101,10 +103,11 @@ The program should do code generation as well as do global storage allocation in
 * `P4_10.sp2020` should print out 3 inputs in reverse
 * `P4_11.sp2020` should print input then input-1, ..., down to 1
 * `P4_12.sp2020` should print input and input-2 down to 1, then input-1 and input-3 down to 1, ...
-* `P4_13.sp2020` should print out 1 to 100
+* `P4_13.sp2020` should print out 1 to 10
 * `P4_14.sp2020` should print out 1 to 10
-* `P4_15.sp2020` should print out 10 to 1 and then print out your input
+* `P4_15.sp2020` should print out 1 to 5 then 10 to 1 and then print out your input
 * `P4_16.sp2020` should print out 1 2 3
+* `test2` bonus test files (all expected output is commented inside the test file)
 ##
 
 #### HOW TO RUN

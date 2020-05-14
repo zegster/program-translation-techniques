@@ -1,0 +1,7 @@
+# Tests a basic READ and WRITE option #
+# The value read in is output #
+declare x := 5 ;
+{
+ in x ;
+ out x ;
+}

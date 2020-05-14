@@ -29,9 +29,11 @@ then
 fi
 
 #Loop through selected directory
-for file in $1/*.sp2020
+for file in $1/*.asm
 do
-	./comp "${file}"
+	echo
+	echo "$file"
+	./VirtMach "${file}"
 done
 exit 0
 

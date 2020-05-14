@@ -1,0 +1,44 @@
+# Make more complex loop checks #
+declare outer := 1 ;
+declare middle := 11 ;
+declare inner := 21 ;
+{
+ # outer should print only twice #
+ loop [ outer << 2 ]
+ {
+  # middle should print thrice #
+  loop [ middle << 13 ]
+  {
+   # inner should print four times #
+   loop [ inner << 24 ]
+   {
+    out inner ;
+    inner := inner + 1 ;
+   };
+   out middle ;
+   inner := 21 ;
+   middle := middle + 1 ;
+  };
+  out outer;
+  middle := 11 ;
+  outer := outer + 1;
+ };
+}
+
+# Expected output is 
+21-24
+11
+21-24
+12
+21-24
+13
+1
+21-24
+11
+21-24
+12
+21-24
+13
+2
+#
+    

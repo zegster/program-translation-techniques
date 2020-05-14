@@ -1,0 +1,14 @@
+# Test some more complex expressions #
+# Should output incrementing values #
+declare x := 2 ;
+{
+ x := ((*4 / 2) + (4 - 1));
+ out x;
+ out ((2 * 3 / 2) * ((***3 + (4 * 2) - 2) - 2));
+ out ***3 + 4 * 2 - *x;
+
+ # Outputing 4 to make it clear if something went wrong
+   Also didn't put as much effort into this one since
+   someone else made a good one already #
+ out 4;
+}
